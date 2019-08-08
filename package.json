@@ -1,0 +1,50 @@
+{
+  "name": "league-api",
+  "version": "1.0.0",
+  "description": "League management api",
+  "main": "server.js",
+  "scripts": {
+    "dev-start": "babel-watch src/server.js",
+    "build": "npx babel src --out-dir build",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": " NODE_ENV=test nyc --reporter=html --reporter=text mocha build/test/userTest.js build/test/tripTest.js build/test/bookingTest.js --timeout 5000000",
+    "start": "npm run build && node build/server.js",
+    "build-test": "npm run build && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dchima/backend-developer-test.git"
+  },
+  "author": "Chima Nnadika",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dchima/backend-developer-test/issues"
+  },
+  "homepage": "https://github.com/dchima/backend-developer-test#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@hapi/joi": "^15.1.0",
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "swagger-jsdoc": "^3.3.0",
+    "swagger-ui-express": "^4.0.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-watch": "^7.0.0",
+    "coveralls": "^3.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "jest": "^24.8.0 ",
+    "nyc": "^14.1.1"
+  }
+}
