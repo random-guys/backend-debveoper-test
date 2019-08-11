@@ -37,7 +37,7 @@ class AuthController {
         };
         const newUser = await UserModel.createUser(userObject);
         // Generate jwt
-        const token = jwt.sign({ id: newUser._id, email, isAdmin: false }, process.env.JWT_SECRET, { expiresIn: '8760h' });
+        const token = jwt.sign({ id: newUser._id, email, isAdmin }, process.env.JWT_SECRET, { expiresIn: '8760h' });
         // Final response
         response(res, 201, { token, ...newUser });
       }
@@ -64,13 +64,13 @@ class AuthController {
             email: user.email,
           });
         } else {
-          res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
+          response(res, 400, 'The Email/Paswword is incorrect');
         }
       } else {
-        res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
+        response(res, 400, 'The Email/Paswword is incorrect');
       }
     } catch (error) {
-      console.log(error);
+      response(res, 500, 'The Email/Paswword is incorrect');
     }
   }
 }
