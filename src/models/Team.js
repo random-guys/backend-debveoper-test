@@ -3,26 +3,26 @@
 /* eslint-disable linebreak-style */
 import database from './Db/index';
 
-const users = process.env.NODE_ENV === 'production' ? 'users' : 'testUsers';
+const teams = process.env.NODE_ENV === 'production' ? 'teams' : 'testTeams';
 
-class UserModel {
-  static findUser(email) {
+class TeamModel {
+  static findTeam(teamName) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(users).findOne({ email }).then((result) => resolve(result))
+        client.db().collection(teams).findOne({ teamName }).then((result) => resolve(result))
           .catch((err) => reject(err));
       }).catch((err) => reject(err));
     });
   }
 
-  static createUser(user) {
+  static addTeam(teamName) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(users).insertOne({ ...user }).then((result) => resolve(result.ops[0]))
+        client.db().collection(teams).insertOne({ teamName }).then((result) => resolve(result.ops[0]))
           .catch((err) => reject(err));
       });
     });
   }
 }
 
-export default UserModel;
+export default TeamModel;
