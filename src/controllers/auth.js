@@ -45,6 +45,34 @@ class AuthController {
       response(res, 500, error);
     }
   }
+
+  static async signIn(req, res) {
+    try {
+      const email = req.body.email.toLowerCase();
+      const { password } = req.body;
+      const user = await UserModel.findUser(email);
+      if (user) {
+        // Compare passwords
+        const match = await bcrypt.compare(password, user.password);
+        if (match) { // (same-boolean) If the passwords match
+          const token = jwt.sign({ id: user._id, email, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '8760h' });
+          response(res, 200, {
+            token,
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+          });
+        } else {
+          res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
+        }
+      } else {
+        res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default AuthController;

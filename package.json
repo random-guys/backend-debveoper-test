@@ -19,6 +19,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "babel-watch": "^7.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -28,7 +29,8 @@
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test jest build/tests",
-    "build": "babel src -d build"
+    "build": "babel src -d build",
+    "dev-start": "babel-watch src/server.js"
   },
   "repository": {
     "type": "git",

@@ -22,6 +22,19 @@ class Validations {
       next();
     }
   }
+
+  static signInValidation(req, res, next) {
+    const schema = {
+      email,
+      password,
+    };
+    const { error } = Joi.validate({ ...req.body }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
 }
 
 export default Validations;
