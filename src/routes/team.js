@@ -6,6 +6,8 @@ import authentication from '../middleware/authentication';
 
 const router = express.Router();
 
-router.post('/', authentication.adminVerifyToken, validations.addTeam, teamController.addTeam);
+router.route('/')
+  .post(authentication.adminVerifyToken, validations.addOrRemoveTeam, teamController.addTeam)
+  .delete(authentication.adminVerifyToken, validations.addOrRemoveTeam, teamController.removeTeam);
 
 export default router;

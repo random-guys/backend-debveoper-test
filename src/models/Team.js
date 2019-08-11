@@ -23,6 +23,15 @@ class TeamModel {
       });
     });
   }
+
+  static removeTeam(teamName) {
+    return new Promise((resolve, reject) => {
+      database.then((client) => {
+        client.db().collection(teams).findOneAndDelete({ teamName }).then((result) => resolve(result.value))
+          .catch((err) => reject(err));
+      });
+    });
+  }
 }
 
 export default TeamModel;

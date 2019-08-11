@@ -18,5 +18,21 @@ class teamController {
       response(res, 500, error);
     }
   }
+
+  static async removeTeam(req, res) {
+    try {
+      const teamName = req.body.teamName.toLowerCase();
+      // Determine if a team already exists;
+      const teamExists = await TeamModel.findTeam(teamName);
+      if (teamExists) {
+        const deletedTeam = await TeamModel.removeTeam(teamName);
+        response(res, 200, deletedTeam);
+      } else {
+        response(res, 400, 'The team does not exist');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
 }
 export default teamController;

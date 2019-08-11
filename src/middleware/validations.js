@@ -37,7 +37,7 @@ class Validations {
     }
   }
 
-  static addTeam(req, res, next) {
+  static addOrRemoveTeam(req, res, next) {
     const schema = {
       teamName,
     };
