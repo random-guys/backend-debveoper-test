@@ -1,29 +1,39 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable linebreak-style */
-import client from '../server';
+import client from './db';
 
-const users = process.env.NODE_ENV !== 'test' ? 'dev_users' : 'test_users';
-let collection;
-(async () => {
-  try {
-    const database = await client.catch((err) => { throw new Error(err); });
-    collection = database.collection(users);
-  } catch (error) {
-    console.log(error);
-    collection = false;
-  }
-})();
+// const db = client.db();
+// const collection = db.collection('users');
+
 
 class User {
+  static create(document) {
+    return new Promise((resolve, reject) => {
+      client
+        .then((data) =>{
+          data.collection('users').insertOne(document)
+            .then((output) => {
+              resolve(output.ops[0]);
+              console.log('user inserted succesfully');
+            }).catch(err => reject(err));
+        });
+    });
+  }
+
   static find(email) {
-    return new Promise(async (resolve, reject) => {
-      if (collection === false) {
-        return reject(new Error('failed connection'));
-      }
-      collection.findOne({ email })
-        .then(result => resolve(result))
-        .catch(err => reject(err));
+    return new Promise((resolve, reject) => {
+      // wait for database to setup.
+      client
+        .then((data) => {
+        // get value from database
+          data.collection('users').findOne({ email })
+            .then((output) => {
+              // resolve data output
+              resolve(output);
+              console.log('user found');
+            }).catch(err => reject(err));
+        });
     });
   }
 }
