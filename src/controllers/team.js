@@ -6,12 +6,13 @@ class teamController {
   static async addTeam(req, res) {
     try {
       const teamName = req.body.teamName.toLowerCase();
+      const { numOfPlayers } = req.body;
       // Determine if a team with the same name already exists;
       const teamExists = await TeamModel.findTeam(teamName);
       if (teamExists) {
         response(res, 400, 'The team already exists');
       } else {
-        const newTeam = await TeamModel.addTeam(teamName);
+        const newTeam = await TeamModel.addTeam(teamName, numOfPlayers);
         response(res, 201, newTeam);
       }
     } catch (error) {
@@ -27,6 +28,22 @@ class teamController {
       if (teamExists) {
         const deletedTeam = await TeamModel.removeTeam(teamName);
         response(res, 200, deletedTeam);
+      } else {
+        response(res, 400, 'The team does not exist');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
+
+  static async updatePlayers(req, res) {
+    try {
+      const teamName = req.params.teamName.toLowerCase();
+      // Determine if a team already exists;
+      const teamExists = await TeamModel.findTeam(teamName);
+      if (teamExists) {
+        const updatedTeam = await TeamModel.updateTeam(teamName, req.body.numOfPlayers);
+        response(res, 200, updatedTeam);
       } else {
         response(res, 400, 'The team does not exist');
       }
