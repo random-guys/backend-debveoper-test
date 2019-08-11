@@ -7,6 +7,9 @@ const lastName = Joi.string().min(3).max(15).required();
 const email = Joi.string().email().required();
 const password = Joi.string().min(6).max(20).required();
 const teamName = Joi.string().min(6).max(30).required();
+const numOfPlayers = Joi.number().integer().min(1).max(50)
+  .required();
+const teamId = Joi.string().min(6).max(30).required();
 
 class Validations {
   static signUpValidation(req, res, next) {
@@ -37,11 +40,40 @@ class Validations {
     }
   }
 
-  static addOrRemoveTeam(req, res, next) {
+  static addTeam(req, res, next) {
+    const schema = {
+      teamName,
+      numOfPlayers,
+    };
+    const { error } = Joi.validate({ ...req.body }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static removeTeam(req, res, next) {
     const schema = {
       teamName,
     };
     const { error } = Joi.validate({ ...req.body }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static updatePlayers(req, res, next) {
+    const schema = {
+      teamName,
+      numOfPlayers,
+    };
+    const { error } = Joi.validate({
+      teamName: req.params.teamName,
+      numOfPlayers: req.body.numOfPlayers,
+    }, schema);
     if (error) {
       response(res, 400, error);
     } else {

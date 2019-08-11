@@ -9,16 +9,18 @@ class TeamModel {
   static findTeam(teamName) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(teams).findOne({ teamName }).then((result) => resolve(result))
+        client.db().collection(teams).findOne({ name: teamName }).then((result) => resolve(result))
           .catch((err) => reject(err));
       }).catch((err) => reject(err));
     });
   }
 
-  static addTeam(teamName) {
+  static addTeam(teamName, numOfPlayers) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(teams).insertOne({ teamName }).then((result) => resolve(result.ops[0]))
+        client.db().collection(teams)
+          .insertOne({ name: teamName, players: numOfPlayers })
+          .then((result) => resolve(result.ops[0]))
           .catch((err) => reject(err));
       });
     });
@@ -27,7 +29,19 @@ class TeamModel {
   static removeTeam(teamName) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(teams).findOneAndDelete({ teamName }).then((result) => resolve(result.value))
+        client.db().collection(teams)
+          .findOneAndDelete({ teamName }).then((result) => resolve(result.value))
+          .catch((err) => reject(err));
+      });
+    });
+  }
+
+  static updateTeam(teamName, numOfPlayers) {
+    return new Promise((resolve, reject) => {
+      database.then((client) => {
+        client.db().collection(teams)
+          .findOneAndUpdate({ teamName }, { $set: { players: numOfPlayers } }, { returnOriginal: false })
+          .then((result) => resolve(result.value))
           .catch((err) => reject(err));
       });
     });
