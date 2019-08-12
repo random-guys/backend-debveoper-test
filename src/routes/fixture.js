@@ -10,5 +10,8 @@ router.route('/')
   .post(authentication.adminVerifyToken, validations.addFixture, fixtureController.addFixture);
 
 router.delete('/:fixtureId', authentication.adminVerifyToken, validations.removeFixture, fixtureController.removeFixture);
+router.patch('/:fixtureId/date', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
+router.patch('/:fixtureId/time', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
+router.patch('/:fixtureId/status', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 
 export default router;

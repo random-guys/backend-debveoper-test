@@ -38,6 +38,20 @@ class FixtureModel {
       }).catch((err) => reject(err));
     });
   }
+
+  static editFixture(id, whatToEdit, editPayload) {
+    return new Promise((resolve, reject) => {
+      database.then((client) => {
+        client.db().collection(fixtures)
+          .findOneAndUpdate(
+            { _id: new ObjectID(id) },
+            { $set: { [whatToEdit]: editPayload } },
+            { returnOriginal: false },
+          ).then((result) => resolve(result.value))
+          .catch((err) => reject(err));
+      }).catch((err) => reject(err));
+    });
+  }
 }
 
 export default FixtureModel;
