@@ -28,4 +28,4 @@ app.use(bodyParser.urlencoded({ extended: true })); // allow for classic url enc
 app.use('/api/v1/auth', userRouter);
 
 // export the app
-export const application = app;
+export default app;

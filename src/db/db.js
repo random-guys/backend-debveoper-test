@@ -12,6 +12,6 @@ export default new Promise(async (resolve, reject) => {
     { poolSize: 5, useNewUrlParser: true }, (err, client) => {
       // return resolve(client);
       if (err) reject(err);
-      else return resolve(client.db('danielchima'));
+      else return resolve(client);
     });
 });

@@ -6,17 +6,18 @@ import client from './db';
 // const db = client.db();
 // const collection = db.collection('users');
 
-
+const NAME = process.env.NODE.ENV !== 'test' ? 'danielchima' : 'testbase';
 class User {
   static create(document) {
     return new Promise((resolve, reject) => {
       client
-        .then((data) =>{
-          data.collection('users').insertOne(document)
+        .then((data) => {
+          data.db(NAME).collection('users').insertOne(document)
             .then((output) => {
               resolve(output.ops[0]);
               console.log('user inserted succesfully');
-            }).catch(err => reject(err));
+            })
+            .catch(err => reject(err));
         });
     });
   }
@@ -27,12 +28,13 @@ class User {
       client
         .then((data) => {
         // get value from database
-          data.collection('users').findOne({ email })
+          data.db(NAME).collection('users').findOne({ email })
             .then((output) => {
               // resolve data output
               resolve(output);
               console.log('user found');
-            }).catch(err => reject(err));
+            })
+            .catch(err => reject(err));
         });
     });
   }
