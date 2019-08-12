@@ -131,6 +131,18 @@ class Validations {
       next();
     }
   }
+
+  static getFixture(req, res, next) {
+    const schema = {
+      fixtureId: id,
+    };
+    const { error } = Joi.validate({ fixtureId: req.params.fixtureId }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
 }
 
 export default Validations;
