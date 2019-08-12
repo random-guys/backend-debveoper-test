@@ -3,7 +3,7 @@
 import request from 'supertest';
 import server from '../server';
 import client from '../db/db';
-/*
+
 const opendb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
@@ -29,7 +29,7 @@ beforeAll(async () => {
 afterAll(async () => {
   try { await closedb(); } catch (error) { console.log(error); }
 });
-*/
+
 describe('POST /auth/signup', () => {
   test('returns new user data', async () => {
     const user = await request(server)
