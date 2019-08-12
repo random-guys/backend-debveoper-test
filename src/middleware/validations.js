@@ -9,7 +9,7 @@ const password = Joi.string().min(6).max(20).required();
 const teamName = Joi.string().min(6).max(30).required();
 const numOfPlayers = Joi.number().integer().min(1).max(50)
   .required();
-const teamId = Joi.string().min(6).max(30).required();
+const id = Joi.string().min(6).max(30).required();
 const date = Joi.date().iso().required();
 const time = Joi.string().regex(/\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))/).required();
 const status = Joi.string().valid('pending', 'completed');
@@ -93,6 +93,18 @@ class Validations {
       status,
     };
     const { error } = Joi.validate({ ...req.body }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static removeFixture(req, res, next) {
+    const schema = {
+      fixtureId: id,
+    };
+    const { error } = Joi.validate({ fixtureId: req.params.fixtureId }, schema);
     if (error) {
       response(res, 400, error);
     } else {

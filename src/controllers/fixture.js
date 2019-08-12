@@ -27,5 +27,21 @@ class FixtureController {
       response(res, 500, error);
     }
   }
+
+  static async removeFixture(req, res) {
+    try {
+      // Determine if the fixture exists;
+      const { fixtureId } = req.params;
+      const fixtureExists = await FixtureModel.findFixture(fixtureId);
+      if (fixtureExists) {
+        const deletedFixture = await FixtureModel.removeFixture(fixtureId);
+        response(res, 200, deletedFixture);
+      } else {
+        response(res, 400, 'The fixture is not on record');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
 }
 export default FixtureController;
