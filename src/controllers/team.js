@@ -22,12 +22,26 @@ class teamController {
 
   static async removeTeam(req, res) {
     try {
-      const teamName = req.body.teamName.toLowerCase();
+      const teamName = req.params.teamName.toLowerCase();
       // Determine if a team already exists;
       const teamExists = await TeamModel.findTeam(teamName);
       if (teamExists) {
         const deletedTeam = await TeamModel.removeTeam(teamName);
         response(res, 200, deletedTeam);
+      } else {
+        response(res, 400, 'The team does not exist');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
+
+  static async findTeam(req, res) {
+    const { teamName } = req.params;
+    try {
+      const team = await TeamModel.findTeam(teamName);
+      if (team) {
+        response(res, 200, team);
       } else {
         response(res, 400, 'The team does not exist');
       }
