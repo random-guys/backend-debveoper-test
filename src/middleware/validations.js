@@ -10,6 +10,9 @@ const teamName = Joi.string().min(6).max(30).required();
 const numOfPlayers = Joi.number().integer().min(1).max(50)
   .required();
 const teamId = Joi.string().min(6).max(30).required();
+const date = Joi.date().iso().required();
+const time = Joi.string().regex(/\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))/).required();
+const status = Joi.string().valid('pending', 'completed');
 
 class Validations {
   static signUpValidation(req, res, next) {
@@ -74,6 +77,22 @@ class Validations {
       teamName: req.params.teamName,
       numOfPlayers: req.body.numOfPlayers,
     }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static addFixture(req, res, next) {
+    const schema = {
+      homeTeam: teamName,
+      awayTeam: teamName,
+      date,
+      time,
+      status,
+    };
+    const { error } = Joi.validate({ ...req.body }, schema);
     if (error) {
       response(res, 400, error);
     } else {
