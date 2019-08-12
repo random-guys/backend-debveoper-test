@@ -51,5 +51,14 @@ class teamController {
       response(res, 500, error);
     }
   }
+
+  static async getTeams(req, res) {
+    try {
+      const teams = await TeamModel.getTeams();
+      response(res, 200, teams);
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
 }
 export default teamController;
