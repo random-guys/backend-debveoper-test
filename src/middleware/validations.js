@@ -60,7 +60,7 @@ class Validations {
     const schema = {
       teamName,
     };
-    const { error } = Joi.validate({ ...req.body }, schema);
+    const { error } = Joi.validate({ ...req.params }, schema);
     if (error) {
       response(res, 400, error);
     } else {
@@ -77,6 +77,18 @@ class Validations {
       teamName: req.params.teamName,
       numOfPlayers: req.body.numOfPlayers,
     }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static findTeam(req, res, next) {
+    const schema = {
+      teamName,
+    };
+    const { error } = Joi.validate({ ...req.params }, schema);
     if (error) {
       response(res, 400, error);
     } else {

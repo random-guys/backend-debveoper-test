@@ -30,7 +30,7 @@ class TeamModel {
     return new Promise((resolve, reject) => {
       database.then((client) => {
         client.db().collection(teams)
-          .findOneAndDelete({ teamName }).then((result) => resolve(result.value))
+          .findOneAndDelete({ name: teamName }).then((result) => resolve(result.value))
           .catch((err) => reject(err));
       }).catch((err) => reject(err));
     });
@@ -40,7 +40,7 @@ class TeamModel {
     return new Promise((resolve, reject) => {
       database.then((client) => {
         client.db().collection(teams)
-          .findOneAndUpdate({ teamName }, { $set: { players: numOfPlayers } }, { returnOriginal: false })
+          .findOneAndUpdate({ name: teamName }, { $set: { players: numOfPlayers } }, { returnOriginal: false })
           .then((result) => resolve(result.value))
           .catch((err) => reject(err));
       }).catch((err) => reject(err));
