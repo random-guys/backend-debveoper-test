@@ -22,7 +22,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 // const db = client.db();
 // const collection = db.collection('users');
 console.log("#1: ".concat(process.env.NODE_ENV));
-var NAME = process.env.NODE.ENV === 'production' ? 'users' : 'testcollection';
+var NAME = process.env.NODE_ENV !== 'testing' ? 'users' : 'testcollection';
+console.log("#10: ".concat(NAME));
 
 var User =
 /*#__PURE__*/
@@ -54,6 +55,7 @@ function () {
         // wait for database to setup.
         _db.default.then(function (data) {
           // get value from database
+          console.log("#1: ".concat(process.env.NODE_ENV));
           console.log("#4: ".concat(NAME));
           data.db('danielchima').collection(NAME).findOne({
             email
