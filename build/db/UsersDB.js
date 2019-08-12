@@ -21,7 +21,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 // const db = client.db();
 // const collection = db.collection('users');
-var NAME = process.env.NODE.ENV !== 'testing' ? 'danielchima' : 'testbase';
+console.log("#1: ".concat(process.env.NODE_ENV));
+var NAME = process.env.NODE.ENV === 'production' ? 'users' : 'testcollection';
 
 var User =
 /*#__PURE__*/
@@ -35,7 +36,9 @@ function () {
     value: function create(document) {
       return new Promise(function (resolve, reject) {
         _db.default.then(function (data) {
-          data.db(NAME).collection('users').insertOne(document).then(function (output) {
+          console.log("#2: ".concat(process.env.NODE_ENV));
+          console.log("#3: ".concat(NAME));
+          data.db('danielchima').collection(NAME).insertOne(document).then(function (output) {
             resolve(output.ops[0]);
             console.log('user inserted succesfully');
           }).catch(function (err) {
@@ -51,7 +54,8 @@ function () {
         // wait for database to setup.
         _db.default.then(function (data) {
           // get value from database
-          data.db(NAME).collection('users').findOne({
+          console.log("#4: ".concat(NAME));
+          data.db('danielchima').collection(NAME).findOne({
             email
           }).then(function (output) {
             // resolve data output

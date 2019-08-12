@@ -25,11 +25,10 @@ _dotenv.default.config();
 var opendb = function opendb() {
   return new Promise(function (resolve, reject) {
     _db.default.then(function (data) {
-      data.db('testbase').collection('users').then(function (output) {
-        return resolve(output);
-      }).catch(function (err) {
-        return reject(err);
-      });
+      data.db('danielchima').collection('testcollection');
+      resolve(data);
+    }).catch(function (err) {
+      return reject(err);
     });
   });
 };
@@ -37,11 +36,22 @@ var opendb = function opendb() {
 var closedb = function closedb() {
   return new Promise(function (resolve, reject) {
     _db.default.then(function (data) {
-      data.close().then(function (output) {
-        return resolve(output);
-      }).catch(function (err) {
-        return reject(err);
+      data.close();
+      resolve(data);
+    }).catch(function (err) {
+      return reject(err);
+    });
+  });
+};
+
+var dropdb = function dropdb() {
+  return new Promise(function (resolve, reject) {
+    _db.default.then(function (data) {
+      data.db('danielchima').collection('testcollection').drop().then(function (result) {
+        return resolve(result);
       });
+    }).catch(function (err) {
+      return reject(err);
     });
   });
 };
@@ -104,7 +114,9 @@ regeneratorRuntime.mark(function _callee2() {
     }
   }, _callee2, null, [[0, 5]]);
 })));
-describe('POST /auth/signup', function () {
+/* TEST CASES FOR USER */
+
+describe('POST /auth/', function () {
   test('returns new user data',
   /*#__PURE__*/
   _asyncToGenerator(
@@ -116,9 +128,9 @@ describe('POST /auth/signup', function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return (0, _supertest.default)(_server.default).post('api/v1/auth/signup').send({
-              email: 'kenny@yahoo.com',
-              first_name: 'Felix',
+            return (0, _supertest.default)(_server.default).post('/api/v1/auth/signup').send({
+              email: 'jeny@yahoo.com',
+              first_name: 'Jeni',
               last_name: 'Mani',
               password: 'felixer11'
             }).catch(function (err) {
@@ -135,7 +147,122 @@ describe('POST /auth/signup', function () {
         }
       }
     }, _callee3);
-  }))); //afterAll(async () => {
-  //await client.db('testbase').dropcollection('users');
-  //});
+  })));
+  test('returns error when user exists',
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee4() {
+    var user;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.next = 2;
+            return (0, _supertest.default)(_server.default).post('/api/v1/auth/signup').send({
+              email: 'jeny@yahoo.com',
+              first_name: 'Jeni',
+              last_name: 'Mani',
+              password: 'felixer11'
+            }).catch(function (err) {
+              return console.log(err);
+            });
+
+          case 2:
+            user = _context4.sent;
+            expect(user.body).toHaveProperty('error');
+
+          case 4:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  })));
+  test('returns logged in user data',
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee5() {
+    var user;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return (0, _supertest.default)(_server.default).post('/api/v1/auth/signin').send({
+              email: 'jeny@yahoo.com',
+              password: 'felixer11'
+            }).catch(function (err) {
+              return console.log(err);
+            });
+
+          case 2:
+            user = _context5.sent;
+            expect(user.body).toHaveProperty('data');
+
+          case 4:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  })));
+  test('returns error with missing parameters',
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee6() {
+    var user;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return (0, _supertest.default)(_server.default).post('/api/v1/auth/signin').send({
+              email: 'jeny@yahoo.com'
+            }).catch(function (err) {
+              return console.log(err);
+            });
+
+          case 2:
+            user = _context6.sent;
+            expect(user.body).toHaveProperty('error');
+
+          case 4:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  })));
+  afterAll(
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee7() {
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.prev = 0;
+            _context7.next = 3;
+            return dropdb();
+
+          case 3:
+            _context7.next = 8;
+            break;
+
+          case 5:
+            _context7.prev = 5;
+            _context7.t0 = _context7["catch"](0);
+            console.log(_context7.t0);
+
+          case 8:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, null, [[0, 5]]);
+  })));
 });

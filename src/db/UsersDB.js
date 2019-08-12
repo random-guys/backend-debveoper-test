@@ -5,14 +5,16 @@ import client from './db';
 
 // const db = client.db();
 // const collection = db.collection('users');
-
-const NAME = process.env.NODE.ENV !== 'testing' ? 'danielchima' : 'testbase';
+console.log(`#1: ${process.env.NODE_ENV}`);
+let NAME = process.env.NODE.ENV === 'production' ? 'users' : 'testcollection';
 class User {
   static create(document) {
     return new Promise((resolve, reject) => {
       client
         .then((data) => {
-          data.db(NAME).collection('users').insertOne(document)
+          console.log(`#2: ${process.env.NODE_ENV}`);
+          console.log(`#3: ${NAME}`);
+          data.db('danielchima').collection(NAME).insertOne(document)
             .then((output) => {
               resolve(output.ops[0]);
               console.log('user inserted succesfully');
@@ -28,7 +30,9 @@ class User {
       client
         .then((data) => {
         // get value from database
-          data.db(NAME).collection('users').findOne({ email })
+        console.log(`#1: ${process.env.NODE_ENV}`);
+          console.log(`#4: ${NAME}`);
+          data.db('danielchima').collection(NAME).findOne({ email })
             .then((output) => {
               // resolve data output
               resolve(output);

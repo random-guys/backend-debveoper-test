@@ -9,19 +9,26 @@ dotenv.config();
 const opendb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
-      data.db('testbase').collection('users')
-        .then(output => resolve(output))
-        .catch(err => reject(err));
-    });
+      data.db('danielchima').collection('testcollection');
+      resolve(data);
+    }).catch(err => reject(err));
 });
+
 
 const closedb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
-      data.close()
-        .then(output => resolve(output))
-        .catch(err => reject(err));
-    });
+      data.close();
+      resolve(data);
+    }).catch(err => reject(err));
+});
+
+const dropdb = () => new Promise((resolve, reject) => {
+  client
+    .then((data) => {
+      data.db('danielchima').collection('testcollection').drop()
+        .then(result => resolve(result));
+    }).catch(err => reject(err));
 });
 
 beforeAll(async () => {
@@ -32,19 +39,52 @@ afterAll(async () => {
   try { await closedb(); } catch (error) { console.log(error); }
 });
 
-describe('POST /auth/signup', () => {
+
+/* TEST CASES FOR USER */
+describe('POST /auth/', () => {
   test('returns new user data', async () => {
     const user = await request(server)
-      .post('api/v1/auth/signup')
+      .post('/api/v1/auth/signup')
       .send({
-        email: 'kenny@yahoo.com',
-        first_name: 'Felix',
+        email: 'jeny@yahoo.com',
+        first_name: 'Jeni',
         last_name: 'Mani',
         password: 'felixer11',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
   });
-  //afterAll(async () => {
-    //await client.db('testbase').dropcollection('users');
-  //});
+
+  test('returns error when user exists', async () => {
+    const user = await request(server)
+      .post('/api/v1/auth/signup')
+      .send({
+        email: 'jeny@yahoo.com',
+        first_name: 'Jeni',
+        last_name: 'Mani',
+        password: 'felixer11',
+      }).catch(err => console.log(err));
+    expect(user.body).toHaveProperty('error');
+  });
+
+  test('returns logged in user data', async () => {
+    const user = await request(server)
+      .post('/api/v1/auth/signin')
+      .send({
+        email: 'jeny@yahoo.com',
+        password: 'felixer11',
+      }).catch(err => console.log(err));
+    expect(user.body).toHaveProperty('data');
+  });
+
+  test('returns error with missing parameters', async () => {
+    const user = await request(server)
+      .post('/api/v1/auth/signin')
+      .send({
+        email: 'jeny@yahoo.com',
+      }).catch(err => console.log(err));
+    expect(user.body).toHaveProperty('error');
+  });
+  afterAll(async () => {
+    try { await dropdb(); } catch (error) { console.log(error); }
+  });
 });
