@@ -1,6 +1,6 @@
 module.exports = {
   verbose: true,
-  testURL: 'http://localhost:5000/',
+  
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
   },

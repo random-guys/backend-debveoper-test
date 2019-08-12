@@ -116,8 +116,8 @@ regeneratorRuntime.mark(function _callee2() {
 })));
 /* TEST CASES FOR USER */
 
-describe('POST /auth/', function () {
-  test('returns new user data',
+describe('USER TESTS /auth/', function () {
+  test('POST: returns new user data',
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
@@ -148,7 +148,7 @@ describe('POST /auth/', function () {
       }
     }, _callee3);
   })));
-  test('returns error when user exists',
+  test('ERR: returns error when user exists',
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
@@ -179,7 +179,7 @@ describe('POST /auth/', function () {
       }
     }, _callee4);
   })));
-  test('returns logged in user data',
+  test('POST: returns logged in user data',
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
@@ -208,7 +208,7 @@ describe('POST /auth/', function () {
       }
     }, _callee5);
   })));
-  test('returns error with missing parameters',
+  test('ERR: returns error with missing parameters',
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/

@@ -41,8 +41,8 @@ afterAll(async () => {
 
 
 /* TEST CASES FOR USER */
-describe('POST /auth/', () => {
-  test('returns new user data', async () => {
+describe('USER TESTS /auth/', () => {
+  test('POST: returns new user data', async () => {
     const user = await request(server)
       .post('/api/v1/auth/signup')
       .send({
@@ -54,7 +54,7 @@ describe('POST /auth/', () => {
     expect(user.body).toHaveProperty('data');
   });
 
-  test('returns error when user exists', async () => {
+  test('ERR: returns error when user exists', async () => {
     const user = await request(server)
       .post('/api/v1/auth/signup')
       .send({
@@ -66,7 +66,7 @@ describe('POST /auth/', () => {
     expect(user.body).toHaveProperty('error');
   });
 
-  test('returns logged in user data', async () => {
+  test('POST: returns logged in user data', async () => {
     const user = await request(server)
       .post('/api/v1/auth/signin')
       .send({
@@ -76,7 +76,7 @@ describe('POST /auth/', () => {
     expect(user.body).toHaveProperty('data');
   });
 
-  test('returns error with missing parameters', async () => {
+  test('ERR: returns error with missing parameters', async () => {
     const user = await request(server)
       .post('/api/v1/auth/signin')
       .send({

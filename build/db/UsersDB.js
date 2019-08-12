@@ -21,24 +21,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 // const db = client.db();
 // const collection = db.collection('users');
-console.log("#1: ".concat(process.env.NODE_ENV));
 var NAME = process.env.NODE_ENV !== 'testing' ? 'users' : 'testcollection';
-console.log("#10: ".concat(NAME));
 
-var User =
+var UsersDB =
 /*#__PURE__*/
 function () {
-  function User() {
-    _classCallCheck(this, User);
+  function UsersDB() {
+    _classCallCheck(this, UsersDB);
   }
 
-  _createClass(User, null, [{
+  _createClass(UsersDB, null, [{
     key: "create",
     value: function create(document) {
       return new Promise(function (resolve, reject) {
         _db.default.then(function (data) {
-          console.log("#2: ".concat(process.env.NODE_ENV));
-          console.log("#3: ".concat(NAME));
           data.db('danielchima').collection(NAME).insertOne(document).then(function (output) {
             resolve(output.ops[0]);
             console.log('user inserted succesfully');
@@ -55,8 +51,6 @@ function () {
         // wait for database to setup.
         _db.default.then(function (data) {
           // get value from database
-          console.log("#1: ".concat(process.env.NODE_ENV));
-          console.log("#4: ".concat(NAME));
           data.db('danielchima').collection(NAME).findOne({
             email
           }).then(function (output) {
@@ -71,8 +65,27 @@ function () {
     }
   }]);
 
-  return User;
+  return UsersDB;
 }();
 
-var _default = User;
+var _default = UsersDB;
+/* 
+  static admin(email) {
+    return new Promise((resolve, reject) => {
+      // wait for database to setup.
+      client
+        .then((data) => {
+        // get value from database
+          data.db('danielchima').collection(NAME).find({ email }, { admin: 1, _id: 0 })
+            .toArray((err, output) => {
+              if (err) { return reject(err); }
+              console.log(`#3: ${output}`);
+              return resolve(output);
+            });
+        }).catch(err => reject(err));
+    });
+  }
+}
+*/
+
 exports.default = _default;
