@@ -8,7 +8,8 @@ const router = express.Router();
 
 router.route('/')
   .post(authentication.adminVerifyToken, validations.addTeam, teamController.addTeam)
-  .delete(authentication.adminVerifyToken, validations.removeTeam, teamController.removeTeam);
+  .delete(authentication.adminVerifyToken, validations.removeTeam, teamController.removeTeam)
+  .get(authentication.adminVerifyToken, teamController.getTeams);
 
 router.patch('/:teamName/players', authentication.adminVerifyToken, validations.updatePlayers, teamController.updatePlayers);
 
