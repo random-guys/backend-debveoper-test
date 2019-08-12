@@ -12,7 +12,7 @@ const numOfPlayers = Joi.number().integer().min(1).max(50)
 const id = Joi.string().min(6).max(30).required();
 const date = Joi.date().iso().required();
 const time = Joi.string().regex(/\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))/).required();
-const status = Joi.string().valid('pending', 'completed');
+const status = Joi.string().valid('pending', 'completed').required();
 
 class Validations {
   static signUpValidation(req, res, next) {
@@ -90,7 +90,6 @@ class Validations {
       awayTeam: teamName,
       date,
       time,
-      status,
     };
     const { error } = Joi.validate({ ...req.body }, schema);
     if (error) {
@@ -105,6 +104,27 @@ class Validations {
       fixtureId: id,
     };
     const { error } = Joi.validate({ fixtureId: req.params.fixtureId }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static editFixture(req, res, next) {
+    let schema;
+    let validationObject;
+    if (/date/i.test(req.path)) {
+      schema = { id, date };
+      validationObject = { id: req.params.fixtureId, date: req.body.date };
+    } else if (/time/i.test(req.path)) {
+      schema = { id, time };
+      validationObject = { id: req.params.fixtureId, time: req.body.time };
+    } else if (/status/i.test(req.path)) {
+      schema = { id, status };
+      validationObject = { id: req.params.fixtureId, status: req.body.status };
+    }
+    const { error } = Joi.validate(validationObject, schema);
     if (error) {
       response(res, 400, error);
     } else {

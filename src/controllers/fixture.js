@@ -43,5 +43,33 @@ class FixtureController {
       response(res, 500, error);
     }
   }
+
+  static async editFixture(req, res) {
+    const { fixtureId } = req.params;
+    try {
+      // Determine if the fixture exists
+      const fixtureExists = await FixtureModel.findFixture(fixtureId);
+      if (fixtureExists) {
+        let whatToEdit;
+        let editPayload;
+        if (/date/i.test(req.path)) {
+          whatToEdit = 'date';
+          editPayload = req.body.date;
+        } else if (/time/i.test(req.path)) {
+          whatToEdit = 'time';
+          editPayload = req.body.time;
+        } else if (/status/i.test(req.path)) {
+          whatToEdit = 'status';
+          editPayload = req.body.status;
+        }
+        const editedFixture = await FixtureModel.editFixture(fixtureId, whatToEdit, editPayload);
+        response(res, 200, editedFixture);
+      } else {
+        response(res, 400, 'The fixture does not exist');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
 }
 export default FixtureController;
