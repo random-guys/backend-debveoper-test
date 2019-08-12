@@ -52,6 +52,20 @@ class FixtureModel {
       }).catch((err) => reject(err));
     });
   }
+
+  static getAllFixtures() {
+    return new Promise((resolve, reject) => {
+      database.then((client) => {
+        client.db().collection(fixtures).find({})
+          .toArray((err, result) => {
+            if (err) {
+              return reject(err);
+            }
+            return resolve(result);
+          });
+      }).catch((err) => reject(err));
+    });
+  }
 }
 
 export default FixtureModel;

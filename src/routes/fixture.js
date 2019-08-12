@@ -7,9 +7,15 @@ import authentication from '../middleware/authentication';
 const router = express.Router();
 
 router.route('/')
-  .post(authentication.adminVerifyToken, validations.addFixture, fixtureController.addFixture);
+  .post(authentication.adminVerifyToken, validations.addFixture, fixtureController.addFixture)
+  .get(authentication.adminVerifyToken, fixtureController.getAllFixtures);
 
-router.delete('/:fixtureId', authentication.adminVerifyToken, validations.removeFixture, fixtureController.removeFixture);
+router.route('/:fixtureId')
+  .delete(
+    authentication.adminVerifyToken, validations.removeFixture, fixtureController.removeFixture,
+  )
+  .get(authentication.adminVerifyToken, validations.getFixture, fixtureController.getFixture);
+
 router.patch('/:fixtureId/date', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 router.patch('/:fixtureId/time', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 router.patch('/:fixtureId/status', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);

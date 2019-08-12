@@ -71,5 +71,28 @@ class FixtureController {
       response(res, 500, error);
     }
   }
+
+  static async getAllFixtures(req, res) {
+    try {
+      const fixtures = await FixtureModel.getAllFixtures();
+      response(res, 200, fixtures);
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
+
+  static async getFixture(req, res) {
+    const { fixtureId } = req.params;
+    try {
+      const fixture = await FixtureModel.findFixture(fixtureId);
+      if (fixture) {
+        response(res, 200, fixture);
+      } else {
+        response(res, 400, 'Fixture does not exist');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
 }
 export default FixtureController;
