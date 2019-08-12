@@ -1,9 +1,11 @@
 /* eslint-disable no-console */
 /* eslint-disable linebreak-style */
 import request from 'supertest';
+import dotenv from 'dotenv';
 import server from '../server';
 import client from '../db/db';
 
+dotenv.config();
 const opendb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {

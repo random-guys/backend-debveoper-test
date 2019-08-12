@@ -21,7 +21,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 // const db = client.db();
 // const collection = db.collection('users');
-var NAME = process.env.NODE.ENV !== 'test' ? 'danielchima' : 'testbase';
+var NAME = process.env.NODE.ENV !== 'testing' ? 'danielchima' : 'testbase';
 
 var User =
 /*#__PURE__*/
