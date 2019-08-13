@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
-import FixtureModel from '../models/Fixture';
-import TeamModel from '../models/Team';
+import FixtureModel from '../models/fixture';
+import TeamModel from '../models/team';
 import response from '../response';
 
 class FixtureController {
