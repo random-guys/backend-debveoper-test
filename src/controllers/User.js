@@ -19,7 +19,7 @@ class User {
       if (member) {
         response(res, 'User exists', 400);
       } else {
-        const admin = true;
+        const admin = false;
         const hashPass = await bcrypt.hash(password, 10);
         const createdUser = {
           email,
@@ -102,7 +102,6 @@ class User {
     if (token) {
       try {
         req.active = await jwt.verify(token, process.env.PRIVATE_KEY);
-        console.log(req.active.admin);
         next();
       } catch (error) {
         response(res, error, 500);

@@ -9,6 +9,7 @@ import { MongoClient as mongo } from 'mongodb';
 import userRouter from './routes/user';
 import teamRouter from './routes/team';
 import fixtureRouter from './routes/fixture';
+import searchRouter from './routes/search';
 // swagger import
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // allow for classic url enc
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/teams', teamRouter);
 app.use('/api/v1/fixtures', fixtureRouter);
+app.use('/api/v1/search', searchRouter);
 
 // export the app
 export default app;
