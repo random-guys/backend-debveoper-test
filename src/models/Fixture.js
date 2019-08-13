@@ -16,12 +16,12 @@ class FixtureModel {
     });
   }
 
-  static addFixture(homeTeam, awayTeam, date, time, status) {
+  static addFixture(homeTeam, awayTeam, dateTime, status) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
         client.db().collection(fixtures)
           .insertOne({
-            homeTeam, awayTeam, date, time, status,
+            homeTeam, awayTeam, dateTime: new Date(dateTime), status,
           })
           .then((result) => resolve(result.ops[0]))
           .catch((err) => reject(err));
@@ -41,11 +41,12 @@ class FixtureModel {
 
   static editFixture(id, whatToEdit, editPayload) {
     return new Promise((resolve, reject) => {
+      const payload = whatToEdit === 'dateTime' ? new Date(editPayload) : editPayload;
       database.then((client) => {
         client.db().collection(fixtures)
           .findOneAndUpdate(
             { _id: new ObjectID(id) },
-            { $set: { [whatToEdit]: editPayload } },
+            { $set: { [whatToEdit]: payload } },
             { returnOriginal: false },
           ).then((result) => resolve(result.value))
           .catch((err) => reject(err));
@@ -53,10 +54,25 @@ class FixtureModel {
     });
   }
 
-  static getAllFixtures() {
+  static getAllFixtures(from, to) {
+    return new Promise((resolve, reject) => {
+      const query = (from && to) ? { dateTime: { $gte: new Date(from), $lte: new Date(to) } } : {};
+      database.then((client) => {
+        client.db().collection(fixtures).find(query)
+          .toArray((err, result) => {
+            if (err) {
+              return reject(err);
+            }
+            return resolve(result);
+          });
+      }).catch((err) => reject(err));
+    });
+  }
+
+  static getCompletedOrPendingFixtures(completedOrPending) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(fixtures).find({})
+        client.db().collection(fixtures).find({ status: completedOrPending })
           .toArray((err, result) => {
             if (err) {
               return reject(err);

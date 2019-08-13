@@ -47,10 +47,11 @@ class TeamModel {
     });
   }
 
-  static getTeams() {
+  static getTeams(minPlayers, maxPlayers) {
     return new Promise((resolve, reject) => {
       database.then((client) => {
-        client.db().collection(teams).find({})
+        const query = (minPlayers && maxPlayers) ? { players: { $gte: Number(minPlayers), $lte: Number(maxPlayers) } } : {};
+        client.db().collection(teams).find(query)
           .toArray((err, result) => {
             if (err) {
               return reject(err);

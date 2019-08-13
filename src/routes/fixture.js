@@ -16,8 +16,7 @@ router.route('/:fixtureId')
   )
   .get(authentication.adminVerifyToken, validations.getFixture, fixtureController.getFixture);
 
-router.patch('/:fixtureId/date', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
-router.patch('/:fixtureId/time', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
+router.patch('/:fixtureId/dateTime', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 router.patch('/:fixtureId/status', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 
 export default router;
