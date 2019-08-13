@@ -110,7 +110,7 @@ function () {
               case 17:
                 newUser = _context.sent;
                 newUser.token = _jsonwebtoken.default.sign({
-                  id: newUser.id,
+                  id: newUser._id,
                   email,
                   admin
                 }, process.env.PRIVATE_KEY, {
@@ -153,32 +153,33 @@ function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
-                // get password from request body
+                console.log("#1: ".concat(req.path)); // get password from request body
+
                 password = req.body.password; // get email from client
 
                 email = req.body.email.replace(/\s/g, '').toLowerCase(); // check if user is in database and
 
-                _context2.next = 5;
+                _context2.next = 6;
                 return _UsersDB.default.find(email);
 
-              case 5:
+              case 6:
                 member = _context2.sent;
 
                 if (member) {
-                  _context2.next = 10;
+                  _context2.next = 11;
                   break;
                 }
 
                 // throw error since email isn't in server
                 (0, _response.default)(res, 'Email does not exist', 401);
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
-              case 10:
-                _context2.next = 12;
+              case 11:
+                _context2.next = 13;
                 return _bcrypt.default.compare(password, member.password);
 
-              case 12:
+              case 13:
                 passwordMatch = _context2.sent;
 
                 // if password doesn't match, throw an error
@@ -186,7 +187,7 @@ function () {
                   (0, _response.default)(res, 'invalid password entered', 401);
                 } else {
                   member.token = _jsonwebtoken.default.sign({
-                    id: member.id,
+                    id: member._id,
                     email,
                     admin: member.admin
                   }, process.env.PRIVATE_KEY, {
@@ -195,21 +196,21 @@ function () {
                   (0, _response.default)(res, member, 200);
                 }
 
-              case 14:
-                _context2.next = 19;
+              case 15:
+                _context2.next = 20;
                 break;
 
-              case 16:
-                _context2.prev = 16;
+              case 17:
+                _context2.prev = 17;
                 _context2.t0 = _context2["catch"](0);
                 (0, _response.default)(res, _context2.t0, 500);
 
-              case 19:
+              case 20:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 16]]);
+        }, _callee2, null, [[0, 17]]);
       }));
 
       function signin(_x3, _x4) {
@@ -232,7 +233,7 @@ function () {
       var _joi$validate = _joi.default.validate(_objectSpread({}, req.body), schema),
           error = _joi$validate.error;
 
-      if (!error) next();else (0, _response.default)(res, 400, error);
+      if (!error) next();else (0, _response.default)(res, error, 400);
     }
   }, {
     key: "signinCheck",
@@ -245,7 +246,7 @@ function () {
       var _joi$validate2 = _joi.default.validate(_objectSpread({}, req.body), schema),
           error = _joi$validate2.error;
 
-      if (!error) next();else (0, _response.default)(res, 400, error);
+      if (!error) next();else (0, _response.default)(res, error, 400);
     }
   }, {
     key: "checkToken",
@@ -253,47 +254,48 @@ function () {
       var _checkToken = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(req, res, next) {
-        var token, online;
+        var token;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 token = req.body.token;
+                console.log("#2: ".concat(token));
 
                 if (!token) {
-                  _context3.next = 15;
+                  _context3.next = 16;
                   break;
                 }
 
-                _context3.prev = 2;
-                _context3.next = 5;
+                _context3.prev = 3;
+                _context3.next = 6;
                 return _jsonwebtoken.default.verify(token, process.env.PRIVATE_KEY);
 
-              case 5:
-                online = _context3.sent;
-                req.activeUser.admin = online.admin;
+              case 6:
+                req.active = _context3.sent;
+                console.log(req.active.admin);
                 next();
-                _context3.next = 13;
+                _context3.next = 14;
                 break;
 
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](2);
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](3);
                 (0, _response.default)(res, _context3.t0, 500);
 
-              case 13:
-                _context3.next = 16;
+              case 14:
+                _context3.next = 17;
                 break;
 
-              case 15:
+              case 16:
                 (0, _response.default)(res, 'Token is not present', 401);
 
-              case 16:
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[2, 10]]);
+        }, _callee3, null, [[3, 11]]);
       }));
 
       function checkToken(_x5, _x6, _x7) {

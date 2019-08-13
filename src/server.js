@@ -26,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // allow for classic url enc
 
 // endpoint routers
 app.use('/api/v1/auth', userRouter);
+app.use('/api/v1/teams', teamRouter);
+app.use('/api/v1/fixtures', fixtureRouter);
 
 // export the app
 export default app;

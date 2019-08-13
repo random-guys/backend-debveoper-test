@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -28,7 +30,7 @@ class User {
         };
         const newUser = await usersDB.create(createdUser);
         newUser.token = jwt.sign(
-          { id: newUser.id, email, admin },
+          { id: newUser._id, email, admin },
           process.env.PRIVATE_KEY,
           { expiresIn: '1000h' },
         );
@@ -41,6 +43,7 @@ class User {
 
   static async signin(req, res) {
     try {
+      console.log(`#1: ${req.path}`);
       // get password from request body
       const { password } = req.body;
       // get email from client
@@ -58,7 +61,7 @@ class User {
           response(res, 'invalid password entered', 401);
         } else {
           member.token = jwt.sign(
-            { id: member.id, email, admin: member.admin },
+            { id: member._id, email, admin: member.admin },
             process.env.PRIVATE_KEY,
             { expiresIn: '1000h' },
           );
@@ -80,7 +83,7 @@ class User {
     };
     const { error } = joi.validate({ ...req.body }, schema);
     if (!error) next();
-    else response(res, 400, error);
+    else response(res, error, 400);
   }
 
   static signinCheck(req, res, next) {
@@ -90,15 +93,16 @@ class User {
     };
     const { error } = joi.validate({ ...req.body }, schema);
     if (!error) next();
-    else response(res, 400, error);
+    else response(res, error, 400);
   }
 
   static async checkToken(req, res, next) {
     const { token } = req.body;
+    console.log(`#2: ${token}`);
     if (token) {
       try {
-        const online = await jwt.verify(token, process.env.PRIVATE_KEY);
-        req.activeUser.admin = online.admin;
+        req.active = await jwt.verify(token, process.env.PRIVATE_KEY);
+        console.log(req.active.admin);
         next();
       } catch (error) {
         response(res, error, 500);

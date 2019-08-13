@@ -46,7 +46,8 @@ app.use(_bodyParser.default.urlencoded({
 })); // allow for classic url encoding
 // endpoint routers
 
-app.use('/api/v1/auth', _user.default); // export the app
+app.use('/api/v1/auth', _user.default);
+app.use('/api/v1/teams', _team.default); // export the app
 
 var _default = app;
 exports.default = _default;
