@@ -1,7 +1,9 @@
 /* eslint-disable linebreak-style */
 module.exports = {
   verbose: true,
-
+  modulePaths: [
+    '<rootDir>',
+  ],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
   },
