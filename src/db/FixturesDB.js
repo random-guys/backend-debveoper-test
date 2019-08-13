@@ -52,6 +52,22 @@ class FixturesDB {
         }).catch(err => reject(err));
     });
   }
+
+  static delete(id) {
+    return new Promise((resolve, reject) => {
+      client
+        .then((data) => {
+          data.db('danielchima').collection(NAME)
+            .findOneAndDelete({ _id: ID(id) })
+            .then((output) => {
+              resolve(output);
+              console.log('team deleted');
+            })
+            .catch(err => reject(err));
+        });
+    });
+  }
+
 }
 
 export default FixturesDB;

@@ -6,6 +6,7 @@ const router = express.Router();
 router.post('/', fixtures.addChecker, user.checkToken, fixtures.add);
 router.get('/view', fixtures.idChecker, user.checkToken, fixtures.viewOne);
 router.get('/all', user.checkToken, fixtures.viewAll);
+router.delete('/', fixtures.idChecker, user.checkToken, fixtures.delete);
 // view get
 // change patch
 // delete

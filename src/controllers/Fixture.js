@@ -51,6 +51,18 @@ class Fixtures {
     } catch (error) {response(res, error, 500); }
   }
 
+  static async delete(req, res) {
+    try {
+      if (!req.active.admin) {
+        response(res, 'Unauthorised user', 401);
+      } else {
+        const { id } = req.body;
+        await FixturesDB.delete(id);
+        response(res, 'fixture successfully deleted', 200);
+      }
+    } catch (error) { response(res, error, 500); }
+  }
+
   static addChecker(req, res, next) {
     const schema = {
       home_team: parameters.home_team,
