@@ -39,6 +39,19 @@ class FixturesDB {
         });
     });
   }
+
+  static all() {
+    return new Promise((resolve, reject) => {
+      client
+        .then((data) => {
+          data.db('danielchima').collection(NAME).find({})
+            .toArray((err, output) => {
+              if (err) return reject(err);
+              return resolve(output);
+            });
+        }).catch(err => reject(err));
+    });
+  }
 }
 
 export default FixturesDB;

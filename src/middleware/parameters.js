@@ -12,6 +12,7 @@ const params = {
   away_team: joi.string().min(4).max(30).required(),
   date: joi.date().iso().required(),
   id: joi.string().min(6).max(30).required(),
+  status: joi.string().valid('completed', 'pending').required(),
 
 };
 

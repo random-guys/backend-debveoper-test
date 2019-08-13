@@ -18,7 +18,7 @@ class Fixtures {
       } else {
         const home_team = req.body.home_team.toLowerCase();
         const away_team = req.body.away_team.toLowerCase();
-        const { date } = req.body;
+        const { date, status } = req.body;
         const check1 = await TeamsDB.find(home_team);
         const check2 = await TeamsDB.find(away_team);
         if (check1 && check2) {
@@ -26,6 +26,7 @@ class Fixtures {
             home_team,
             away_team,
             date,
+            status,
           };
           const newFixture = await FixturesDB.add(fixture);
           response(res, { ...newFixture }, 200);
@@ -43,16 +44,33 @@ class Fixtures {
     } catch (error) { response(res, error, 500); }
   }
 
+  static async viewAll(req, res) {
+    try {
+      const fixtures = await FixturesDB.all();
+      response(res, fixtures, 200);
+    } catch (error) {response(res, error, 500); }
+  }
 
   static addChecker(req, res, next) {
     const schema = {
       home_team: parameters.home_team,
       away_team: parameters.away_team,
       date: parameters.date,
+      status: parameters.status,
     };
 
-    const { home_team, away_team, date } = req.body;
-    const { error } = joi.validate({ home_team, away_team, date }, schema);
+    const {
+      home_team,
+      away_team,
+      date,
+      status,
+    } = req.body;
+    const { error } = joi.validate({
+      home_team,
+      away_team,
+      date,
+      status,
+    }, schema);
     if (!error) next();
     else response(res, error, 400);
   }
@@ -64,7 +82,7 @@ class Fixtures {
     const { id } = req.body;
     const { error } = joi.validate({ id }, schema);
     if (!error) next();
-    else response(res, error, 400); 
+    else response(res, error, 400);
   }
 }
 
