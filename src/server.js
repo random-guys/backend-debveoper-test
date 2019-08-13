@@ -4,7 +4,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import { MongoClient as mongo } from 'mongodb';
 // routes import
 import userRouter from './routes/user';
 import teamRouter from './routes/team';
@@ -18,7 +17,7 @@ const app = express();
 // assign ports
 const PORT = process.env.PORT || 5000;
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'testing') {
   app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 }
 // bpdy parser to allow posting

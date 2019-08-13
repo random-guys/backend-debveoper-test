@@ -25,7 +25,7 @@ _dotenv.default.config();
 var opendb = function opendb() {
   return new Promise(function (resolve, reject) {
     _db.default.then(function (data) {
-      data.db('danielchima').collection('testcollection');
+      data.db('danielchima').collection('test1');
       resolve(data);
     }).catch(function (err) {
       return reject(err);
@@ -47,7 +47,7 @@ var closedb = function closedb() {
 var dropdb = function dropdb() {
   return new Promise(function (resolve, reject) {
     _db.default.then(function (data) {
-      data.db('danielchima').collection('testcollection').drop().then(function (result) {
+      data.db('danielchima').collection('test1').drop().then(function (result) {
         return resolve(result);
       });
     }).catch(function (err) {

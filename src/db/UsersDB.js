@@ -5,7 +5,7 @@ import client from './db';
 
 // const db = client.db();
 // const collection = db.collection('users');
-const NAME = process.env.NODE_ENV !== 'testing' ? 'users' : 'testcollection';
+const NAME = process.env.NODE_ENV !== 'testing' ? 'users' : 'test1';
 class UsersDB {
   static create(document) {
     return new Promise((resolve, reject) => {

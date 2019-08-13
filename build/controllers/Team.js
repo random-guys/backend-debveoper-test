@@ -185,7 +185,7 @@ function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
-                team_name = req.body.team_name.toLowerCase();
+                team_name = req.params.name.toLowerCase();
                 _context3.next = 4;
                 return _TeamsDB.default.find(team_name);
 
@@ -268,6 +268,60 @@ function () {
       return _delete;
     }()
   }, {
+    key: "changeName",
+    value: function () {
+      var _changeName = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5(req, res) {
+        var old_name, new_name;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+
+                if (req.active.admin) {
+                  _context5.next = 5;
+                  break;
+                }
+
+                (0, _response.default)(res, 'Unauthorised user', 401);
+                _context5.next = 10;
+                break;
+
+              case 5:
+                old_name = req.params.name.toLowerCase();
+                new_name = req.body.team_name.toLowerCase();
+                _context5.next = 9;
+                return _TeamsDB.default.change(old_name, new_name);
+
+              case 9:
+                (0, _response.default)(res, "".concat(old_name, " successfully changed to ").concat(new_name), 200);
+
+              case 10:
+                _context5.next = 15;
+                break;
+
+              case 12:
+                _context5.prev = 12;
+                _context5.t0 = _context5["catch"](0);
+                (0, _response.default)(res, _context5.t0, 500);
+
+              case 15:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[0, 12]]);
+      }));
+
+      function changeName(_x9, _x10) {
+        return _changeName.apply(this, arguments);
+      }
+
+      return changeName;
+    }()
+  }, {
     key: "addChecker",
     value: function addChecker(req, res, next) {
       var schema = {
@@ -287,8 +341,8 @@ function () {
       if (!error) next();else (0, _response.default)(res, error, 400);
     }
   }, {
-    key: "nameChecker",
-    value: function nameChecker(req, res, next) {
+    key: "deleteChecker",
+    value: function deleteChecker(req, res, next) {
       var schema = {
         team_name: _parameters.default.team_name
       };
@@ -298,6 +352,36 @@ function () {
         team_name
       }, schema),
           error = _joi$validate2.error;
+
+      if (!error) next();else (0, _response.default)(res, error, 400);
+    }
+  }, {
+    key: "nameChecker",
+    value: function nameChecker(req, res, next) {
+      var schema = {
+        team_name: _parameters.default.team_name
+      };
+      var team_name = req.body.team_name;
+
+      var _joi$validate3 = _joi.default.validate({
+        team_name
+      }, schema),
+          error = _joi$validate3.error;
+
+      if (!error) next();else (0, _response.default)(res, error, 400);
+    }
+  }, {
+    key: "paramChecker",
+    value: function paramChecker(req, res, next) {
+      var schema = {
+        name: _parameters.default.team_name
+      };
+      var name = req.params.name;
+
+      var _joi$validate4 = _joi.default.validate({
+        name
+      }, schema),
+          error = _joi$validate4.error;
 
       if (!error) next();else (0, _response.default)(res, error, 400);
     }

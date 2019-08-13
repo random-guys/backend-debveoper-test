@@ -16,9 +16,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = _express.default.Router();
 
 router.post('/', _Team.default.addChecker, _User.default.checkToken, _Team.default.add);
-router.get('/', _Team.default.nameChecker, _User.default.checkToken, _Team.default.viewOne);
+router.get('/view/:name', _Team.default.paramChecker, _User.default.checkToken, _Team.default.viewOne);
 router.get('/all', _User.default.checkToken, _Team.default.viewAll);
-router.delete('/', _Team.default.nameChecker, _User.default.checkToken, _Team.default.delete); // view get
+router.delete('/', _Team.default.deleteChecker, _User.default.checkToken, _Team.default.delete);
+router.patch('/:name', _Team.default.paramChecker, _Team.default.nameChecker, _User.default.checkToken, _Team.default.changeName); // view get
 // change patch
 // delete
 
