@@ -1,0 +1,56 @@
+{
+  "name": "league-api",
+  "version": "1.0.0",
+  "description": "League management api",
+  "main": "server.js",
+  "scripts": {
+    "dev-start": "babel-watch src/server.js",
+    "build": "npx babel src --out-dir build",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": " NODE_ENV=testing jest build/__tests__/userTest.js build/__tests__/teamTest.js --detectOpenHandles",
+    "start": "npm run build && node build/server.js",
+    "build-test": "npm run build && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dchima/backend-developer-test.git"
+  },
+  "author": "Chima Nnadika",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dchima/backend-developer-test/issues"
+  },
+  "homepage": "https://github.com/dchima/backend-developer-test#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@hapi/joi": "^15.1.0",
+    "app-root-path": "^2.2.1",
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongodb": "^3.2.7",
+    "mongoose": "^5.6.9",
+    "morgan": "^1.9.1",
+    "supertest": "^4.0.2",
+    "swagger-jsdoc": "^3.3.0",
+    "swagger-ui-express": "^4.0.7",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-watch": "^7.0.0",
+    "coveralls": "^3.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "jest": "^24.8.0 ",
+    "nyc": "^14.1.1"
+  }
+}
