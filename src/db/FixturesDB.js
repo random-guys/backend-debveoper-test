@@ -40,6 +40,19 @@ class FixturesDB {
     });
   }
 
+  static filter(status) {
+    return new Promise((resolve, reject) => {
+      client
+        .then((data) => {
+          data.db('danielchima').collection(NAME).find({ status })
+            .toArray((err, output) => {
+              if (err) return reject(err);
+              return resolve(output);
+            });
+        }).catch(err => reject(err));
+    });
+  }
+
   static all() {
     return new Promise((resolve, reject) => {
       client
@@ -61,13 +74,30 @@ class FixturesDB {
             .findOneAndDelete({ _id: ID(id) })
             .then((output) => {
               resolve(output);
-              console.log('team deleted');
+              console.log('fixture deleted');
             })
             .catch(err => reject(err));
         });
     });
   }
 
+  static change(id, document) {
+    const update = {
+      $set: document,
+    };
+    return new Promise((resolve, reject) => {
+      client
+        .then((data) => {
+          data.db('danielchima').collection(NAME)
+            .findOneAndUpdate({ _id: ID(id) }, update)
+            .then((output) => {
+              resolve(output);
+              console.log('fixture updated successfully');
+            })
+            .catch(err => reject(err));
+        });
+    });
+  }
 }
 
 export default FixturesDB;

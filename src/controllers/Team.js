@@ -107,7 +107,6 @@ class Team {
       name: parameters.team_name,
     };
     const { name } = req.params;
-    console.log(`#name:${name}`);
     const { error } = joi.validate({ name }, schema);
     if (!error) next();
     else response(res, error, 400);
