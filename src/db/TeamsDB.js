@@ -65,6 +65,24 @@ class TeamsDB {
         });
     });
   }
+
+  static change(team_name, new_name) {
+    const update = {
+      $set: { team_name: new_name },
+    };
+    return new Promise((resolve, reject) =>{
+      client
+        .then((data) => {
+          data.db('danielchima').collection(NAME)
+            .findOneAndUpdate({ team_name }, update)
+            .then((output) => {
+              resolve(output);
+              console.log('team updated');
+            })
+            .catch(err => reject(err));
+        });
+    });
+  }
 }
 
 export default TeamsDB;
