@@ -58,7 +58,7 @@ class AuthController {
         const token = _jsonwebtoken.default.sign({
           id: newUser._id,
           email,
-          isAdmin: false
+          isAdmin
         }, process.env.JWT_SECRET, {
           expiresIn: '8760h'
         }); // Final response
@@ -70,6 +70,46 @@ class AuthController {
       }
     } catch (error) {
       (0, _response.default)(res, 500, error);
+    }
+  }
+
+  static async signIn(req, res) {
+    try {
+      const email = req.body.email.toLowerCase();
+      const {
+        password
+      } = req.body;
+      const user = await _User.default.findUser(email);
+
+      if (user) {
+        // Compare passwords
+        const match = await _bcrypt.default.compare(password, user.password);
+
+        if (match) {
+          // (same-boolean) If the passwords match
+          const token = _jsonwebtoken.default.sign({
+            id: user._id,
+            email,
+            isAdmin: user.isAdmin
+          }, process.env.JWT_SECRET, {
+            expiresIn: '8760h'
+          });
+
+          (0, _response.default)(res, 200, {
+            token,
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+          });
+        } else {
+          (0, _response.default)(res, 400, 'The Email/Paswword is incorrect');
+        }
+      } else {
+        (0, _response.default)(res, 400, 'The Email/Paswword is incorrect');
+      }
+    } catch (error) {
+      (0, _response.default)(res, 500, 'The Email/Paswword is incorrect');
     }
   }
 
