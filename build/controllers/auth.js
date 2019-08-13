@@ -13,7 +13,7 @@ var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
 var _response = _interopRequireDefault(require("../response"));
 
-var _User = _interopRequireDefault(require("../models/User"));
+var _user = _interopRequireDefault(require("../models/user"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35,7 +35,7 @@ class AuthController {
       } = req.body; // set to lowercase
 
       const email = req.body.email.toLowerCase();
-      const userExists = await _User.default.findUser(email);
+      const userExists = await _user.default.findUser(email);
 
       if (userExists) {
         (0, _response.default)(res, 400, 'Email already exists');
@@ -53,7 +53,7 @@ class AuthController {
           address,
           isAdmin
         };
-        const newUser = await _User.default.createUser(userObject); // Generate jwt
+        const newUser = await _user.default.createUser(userObject); // Generate jwt
 
         const token = _jsonwebtoken.default.sign({
           id: newUser._id,
@@ -79,7 +79,7 @@ class AuthController {
       const {
         password
       } = req.body;
-      const user = await _User.default.findUser(email);
+      const user = await _user.default.findUser(email);
 
       if (user) {
         // Compare passwords

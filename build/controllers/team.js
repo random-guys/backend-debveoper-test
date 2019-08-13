@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _Team = _interopRequireDefault(require("../models/Team"));
+var _team = _interopRequireDefault(require("../models/team"));
 
 var _response = _interopRequireDefault(require("../response"));
 
@@ -22,12 +22,12 @@ class teamController {
         numOfPlayers
       } = req.body; // Determine if a team with the same name already exists;
 
-      const teamExists = await _Team.default.findTeam(teamName);
+      const teamExists = await _team.default.findTeam(teamName);
 
       if (teamExists) {
         (0, _response.default)(res, 400, 'The team already exists');
       } else {
-        const newTeam = await _Team.default.addTeam(teamName, numOfPlayers);
+        const newTeam = await _team.default.addTeam(teamName, numOfPlayers);
         (0, _response.default)(res, 201, newTeam);
       }
     } catch (error) {
@@ -39,10 +39,10 @@ class teamController {
     try {
       const teamName = req.params.teamName.toLowerCase(); // Determine if a team already exists;
 
-      const teamExists = await _Team.default.findTeam(teamName);
+      const teamExists = await _team.default.findTeam(teamName);
 
       if (teamExists) {
-        const deletedTeam = await _Team.default.removeTeam(teamName);
+        const deletedTeam = await _team.default.removeTeam(teamName);
         (0, _response.default)(res, 200, deletedTeam);
       } else {
         (0, _response.default)(res, 400, 'The team does not exist');
@@ -58,7 +58,7 @@ class teamController {
     } = req.params;
 
     try {
-      const team = await _Team.default.findTeam(teamName);
+      const team = await _team.default.findTeam(teamName);
 
       if (team) {
         (0, _response.default)(res, 200, team);
@@ -74,10 +74,10 @@ class teamController {
     try {
       const teamName = req.params.teamName.toLowerCase(); // Determine if a team already exists;
 
-      const teamExists = await _Team.default.findTeam(teamName);
+      const teamExists = await _team.default.findTeam(teamName);
 
       if (teamExists) {
-        const updatedTeam = await _Team.default.updateTeam(teamName, req.body.numOfPlayers);
+        const updatedTeam = await _team.default.updateTeam(teamName, req.body.numOfPlayers);
         (0, _response.default)(res, 200, updatedTeam);
       } else {
         (0, _response.default)(res, 400, 'The team does not exist');
@@ -89,7 +89,7 @@ class teamController {
 
   static async getTeams(req, res) {
     try {
-      const teams = await _Team.default.getTeams();
+      const teams = await _team.default.getTeams();
       (0, _response.default)(res, 200, teams);
     } catch (error) {
       (0, _response.default)(res, 500, error);
@@ -99,7 +99,7 @@ class teamController {
   static async publicTeamSearch(req, res) {
     try {
       if (req.query.min_players && req.query.max_players) {
-        const teams = await _Team.default.getTeams(req.query.min_players, req.query.max_players);
+        const teams = await _team.default.getTeams(req.query.min_players, req.query.max_players);
         (0, _response.default)(res, 200, teams);
       } else {
         teamController.getTeams(req, res);

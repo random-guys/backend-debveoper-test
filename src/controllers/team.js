@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import TeamModel from '../models/Team';
+import TeamModel from '../models/team';
 import response from '../response';
 
 class teamController {

@@ -7,9 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _Fixture = _interopRequireDefault(require("../models/Fixture"));
+var _fixture = _interopRequireDefault(require("../models/fixture"));
 
-var _Team = _interopRequireDefault(require("../models/Team"));
+var _team = _interopRequireDefault(require("../models/team"));
 
 var _response = _interopRequireDefault(require("../response"));
 
@@ -26,13 +26,13 @@ class FixtureController {
         time
       } = req.body; // Determine if the home and away teams exist
 
-      const homeTeamExists = await _Team.default.findTeam(homeTeam);
-      const awayTeamExists = await _Team.default.findTeam(awayTeam);
+      const homeTeamExists = await _team.default.findTeam(homeTeam);
+      const awayTeamExists = await _team.default.findTeam(awayTeam);
 
       if (homeTeamExists && awayTeamExists) {
         if (homeTeam !== awayTeam) {
           // Create fixture
-          const newFixture = await _Fixture.default.addFixture(homeTeam, awayTeam, dateTime, 'pending');
+          const newFixture = await _fixture.default.addFixture(homeTeam, awayTeam, dateTime, 'pending');
           (0, _response.default)(res, 201, newFixture);
         } else {
           (0, _response.default)(res, 400, 'You cant choose the same team for home and away');
@@ -51,10 +51,10 @@ class FixtureController {
       const {
         fixtureId
       } = req.params;
-      const fixtureExists = await _Fixture.default.findFixture(fixtureId);
+      const fixtureExists = await _fixture.default.findFixture(fixtureId);
 
       if (fixtureExists) {
-        const deletedFixture = await _Fixture.default.removeFixture(fixtureId);
+        const deletedFixture = await _fixture.default.removeFixture(fixtureId);
         (0, _response.default)(res, 200, deletedFixture);
       } else {
         (0, _response.default)(res, 400, 'The fixture is not on record');
@@ -71,7 +71,7 @@ class FixtureController {
 
     try {
       // Determine if the fixture exists
-      const fixtureExists = await _Fixture.default.findFixture(fixtureId);
+      const fixtureExists = await _fixture.default.findFixture(fixtureId);
 
       if (fixtureExists) {
         let whatToEdit;
@@ -85,7 +85,7 @@ class FixtureController {
           editPayload = req.body.status;
         }
 
-        const editedFixture = await _Fixture.default.editFixture(fixtureId, whatToEdit, editPayload);
+        const editedFixture = await _fixture.default.editFixture(fixtureId, whatToEdit, editPayload);
         (0, _response.default)(res, 200, editedFixture);
       } else {
         (0, _response.default)(res, 400, 'The fixture does not exist');
@@ -97,7 +97,7 @@ class FixtureController {
 
   static async getAllFixtures(req, res) {
     try {
-      const fixtures = await _Fixture.default.getAllFixtures();
+      const fixtures = await _fixture.default.getAllFixtures();
       (0, _response.default)(res, 200, fixtures);
     } catch (error) {
       (0, _response.default)(res, 500, error);
@@ -110,7 +110,7 @@ class FixtureController {
     } = req.params;
 
     try {
-      const fixture = await _Fixture.default.findFixture(fixtureId);
+      const fixture = await _fixture.default.findFixture(fixtureId);
 
       if (fixture) {
         (0, _response.default)(res, 200, fixture);
@@ -125,7 +125,7 @@ class FixtureController {
   static async getCompletedOrPendingFixtures(req, res) {
     try {
       const completedOrPending = /completed/i.test(req.path) ? 'completed' : 'pending';
-      const fixtures = await _Fixture.default.getCompletedOrPendingFixtures(completedOrPending);
+      const fixtures = await _fixture.default.getCompletedOrPendingFixtures(completedOrPending);
       (0, _response.default)(res, 200, fixtures);
     } catch (error) {
       (0, _response.default)(res, 500, error);
@@ -135,7 +135,7 @@ class FixtureController {
   static async publicFixtureSearch(req, res) {
     try {
       if (req.query.from && req.query.to) {
-        const fixtures = await _Fixture.default.getAllFixtures(req.query.from, req.query.to);
+        const fixtures = await _fixture.default.getAllFixtures(req.query.from, req.query.to);
         (0, _response.default)(res, 200, fixtures);
       } else {
         FixtureController.getAllFixtures(req, res);

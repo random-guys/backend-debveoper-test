@@ -3,7 +3,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import response from '../response';
-import UserModel from '../models/User';
+import UserModel from '../models/user';
 
 
 class AuthController {
