@@ -8,14 +8,14 @@ class FixtureController {
     try {
       const homeTeam = req.body.homeTeam.toLowerCase();
       const awayTeam = req.body.awayTeam.toLowerCase();
-      const { date, time } = req.body;
+      const { dateTime, time } = req.body;
       // Determine if the home and away teams exist
       const homeTeamExists = await TeamModel.findTeam(homeTeam);
       const awayTeamExists = await TeamModel.findTeam(awayTeam);
       if (homeTeamExists && awayTeamExists) {
         if (homeTeam !== awayTeam) {
           // Create fixture
-          const newFixture = await FixtureModel.addFixture(homeTeam, awayTeam, date, time, 'pending');
+          const newFixture = await FixtureModel.addFixture(homeTeam, awayTeam, dateTime, 'pending');
           response(res, 201, newFixture);
         } else {
           response(res, 400, 'You cant choose the same team for home and away');
@@ -52,12 +52,9 @@ class FixtureController {
       if (fixtureExists) {
         let whatToEdit;
         let editPayload;
-        if (/date/i.test(req.path)) {
-          whatToEdit = 'date';
-          editPayload = req.body.date;
-        } else if (/time/i.test(req.path)) {
-          whatToEdit = 'time';
-          editPayload = req.body.time;
+        if (/dateTime/i.test(req.path)) {
+          whatToEdit = 'dateTime';
+          editPayload = req.body.dateTime;
         } else if (/status/i.test(req.path)) {
           whatToEdit = 'status';
           editPayload = req.body.status;
@@ -89,6 +86,29 @@ class FixtureController {
         response(res, 200, fixture);
       } else {
         response(res, 400, 'Fixture does not exist');
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
+
+  static async getCompletedOrPendingFixtures(req, res) {
+    try {
+      const completedOrPending = /completed/i.test(req.path) ? 'completed' : 'pending';
+      const fixtures = await FixtureModel.getCompletedOrPendingFixtures(completedOrPending);
+      response(res, 200, fixtures);
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
+
+  static async publicFixtureSearch(req, res) {
+    try {
+      if (req.query.from && req.query.to) {
+        const fixtures = await FixtureModel.getAllFixtures(req.query.from, req.query.to);
+        response(res, 200, fixtures);
+      } else {
+        FixtureController.getAllFixtures(req, res);
       }
     } catch (error) {
       response(res, 500, error);

@@ -74,5 +74,18 @@ class teamController {
       response(res, 500, error);
     }
   }
+
+  static async publicTeamSearch(req, res) {
+    try {
+      if (req.query.min_players && req.query.max_players) {
+        const teams = await TeamModel.getTeams(req.query.min_players, req.query.max_players);
+        response(res, 200, teams);
+      } else {
+        teamController.getTeams(req, res);
+      }
+    } catch (error) {
+      response(res, 500, error);
+    }
+  }
 }
 export default teamController;

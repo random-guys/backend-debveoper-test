@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable linebreak-style */
 import Joi from '@hapi/joi';
 import response from '../response';
@@ -10,9 +11,10 @@ const teamName = Joi.string().min(6).max(30).required();
 const numOfPlayers = Joi.number().integer().min(1).max(50)
   .required();
 const id = Joi.string().min(6).max(30).required();
-const date = Joi.date().iso().required();
-const time = Joi.string().regex(/\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))/).required();
+const dateTime = Joi.date().iso().required();
 const status = Joi.string().valid('pending', 'completed').required();
+const min_players = Joi.number().integer().min(1).max(50);
+const max_players = Joi.number().integer().min(1).max(50);
 
 class Validations {
   static signUpValidation(req, res, next) {
@@ -100,8 +102,7 @@ class Validations {
     const schema = {
       homeTeam: teamName,
       awayTeam: teamName,
-      date,
-      time,
+      dateTime,
     };
     const { error } = Joi.validate({ ...req.body }, schema);
     if (error) {
@@ -126,12 +127,9 @@ class Validations {
   static editFixture(req, res, next) {
     let schema;
     let validationObject;
-    if (/date/i.test(req.path)) {
-      schema = { id, date };
-      validationObject = { id: req.params.fixtureId, date: req.body.date };
-    } else if (/time/i.test(req.path)) {
-      schema = { id, time };
-      validationObject = { id: req.params.fixtureId, time: req.body.time };
+    if (/dateTime/i.test(req.path)) {
+      schema = { id, dateTime };
+      validationObject = { id: req.params.fixtureId, dateTime: req.body.dateTime };
     } else if (/status/i.test(req.path)) {
       schema = { id, status };
       validationObject = { id: req.params.fixtureId, status: req.body.status };
@@ -149,6 +147,32 @@ class Validations {
       fixtureId: id,
     };
     const { error } = Joi.validate({ fixtureId: req.params.fixtureId }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static publicTeamSearch(req, res, next) {
+    const schema = {
+      min_players,
+      max_players,
+    };
+    const { error } = Joi.validate({ ...req.query }, schema);
+    if (error) {
+      response(res, 400, error);
+    } else {
+      next();
+    }
+  }
+
+  static publicFixtureSearch(req, res, next) {
+    const schema = {
+      from: Joi.date().iso(),
+      to: Joi.date().iso(),
+    };
+    const { error } = Joi.validate({ ...req.query }, schema);
     if (error) {
       response(res, 400, error);
     } else {
