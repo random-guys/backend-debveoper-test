@@ -38,8 +38,6 @@ class UserModel {
     });
   }
 
-  static isAdmin(userId) {}
-
 }
 
 var _default = UserModel;

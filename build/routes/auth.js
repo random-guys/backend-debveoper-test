@@ -9,7 +9,7 @@ var _express = _interopRequireDefault(require("express"));
 
 var _auth = _interopRequireDefault(require("../controllers/auth"));
 
-var _validations = _interopRequireDefault(require("../validations"));
+var _validations = _interopRequireDefault(require("../middleware/validations"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17,5 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const router = _express.default.Router();
 
 router.post('/signup/user', _validations.default.signUpValidation, _auth.default.signUp);
+router.post('/signup/admin', _validations.default.signUpValidation, _auth.default.signUp);
+router.post('/signin', _validations.default.signInValidation, _auth.default.signIn);
 var _default = router;
 exports.default = _default;
