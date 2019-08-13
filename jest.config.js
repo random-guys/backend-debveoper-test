@@ -1,6 +1,11 @@
 module.exports = {
   verbose: true,
-  
+  roots: [
+    '<rootDir>',
+  ],
+  modulePaths: [
+    '<rootDir>',
+  ],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
   },
