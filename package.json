@@ -30,7 +30,8 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest build/tests",
     "build": "babel src -d build",
-    "dev-start": "babel-watch src/server.js"
+    "dev-start": "babel-watch src/server.js",
+    "start": "cross-env NODE_ENV=production node build/server.js"
   },
   "repository": {
     "type": "git",

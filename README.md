@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/EziamakaNV/backend-developer-test.svg?branch=master)](https://travis-ci.org/EziamakaNV/backend-developer-test)
+
 # Software Developer Application Test
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”
