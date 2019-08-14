@@ -21,7 +21,7 @@ class Authentication {
         const tokenArray = authorization.split(' ');
         const token = tokenArray[1];
         const user = await jwt.verify(token, process.env.JWT_SECRET);
-        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'production') {
           redisClient.exists(user.id, (err, reply) => {
             if (err) {
               console.log('Redis not working...');
@@ -73,10 +73,11 @@ class Authentication {
               next();
             }
           });
+        } else {
+          // Create user object in the request
+          req.user = user;
+          next();
         }
-        // Create user object in the request
-        req.user = user;
-        next();
       } catch (error) {
         response(res, 500, error);
       }
