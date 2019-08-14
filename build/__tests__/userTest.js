@@ -140,8 +140,12 @@ describe('USER TESTS /auth/', function () {
           case 2:
             user = _context3.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data).toHaveProperty('_id');
+            expect(user.body.data).toHaveProperty('email');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 8:
           case "end":
             return _context3.stop();
         }
@@ -171,8 +175,11 @@ describe('USER TESTS /auth/', function () {
           case 2:
             user = _context4.sent;
             expect(user.body).toHaveProperty('error');
+            expect(user.body.error).toBe('User exists');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(400);
 
-          case 4:
+          case 7:
           case "end":
             return _context4.stop();
         }
@@ -200,8 +207,13 @@ describe('USER TESTS /auth/', function () {
           case 2:
             user = _context5.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data).toHaveProperty('_id');
+            expect(user.body.data).toHaveProperty('email');
+            expect(user.body.data).toHaveProperty('token');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 9:
           case "end":
             return _context5.stop();
         }
@@ -228,8 +240,10 @@ describe('USER TESTS /auth/', function () {
           case 2:
             user = _context6.sent;
             expect(user.body).toHaveProperty('error');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(400);
 
-          case 4:
+          case 6:
           case "end":
             return _context6.stop();
         }

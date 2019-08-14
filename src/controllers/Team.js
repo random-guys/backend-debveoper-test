@@ -16,7 +16,6 @@ class Team {
         response(res, 'Unauthorised user', 401);
       } else {
         const team_name = req.body.team_name.toLowerCase();
-        console.log(`#1: ${team_name}`);
         const member = await TeamsDB.find(team_name);
         if (!member) {
           const { team_size } = req.body;
