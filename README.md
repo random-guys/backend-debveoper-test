@@ -1,5 +1,12 @@
 [![Build Status](https://travis-ci.org/EziamakaNV/backend-developer-test.svg?branch=master)](https://travis-ci.org/EziamakaNV/backend-developer-test)
 
+# API documentation
+- https://documenter.getpostman.com/view/5211679/SVYwLwLL
+
+# API endpoint
+- https://sterling-league-test.herokuapp.com/api/v1/
+- Refer to the documentation for a full list of the endpoint
+
 # Software Developer Application Test
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”
