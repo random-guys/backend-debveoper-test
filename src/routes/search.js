@@ -5,7 +5,7 @@ import limiter from '../limiter';
 
 
 const router = express.Router();
-router.get('/view/:name', team.paramChecker, limiter, team.viewOne);
-router.get('/:status', fixtures.statusChecker, limiter, fixtures.filter);
+router.get('/view/:name', team.paramChecker, team.viewOne);
+router.get('/:status', fixtures.statusChecker, fixtures.filter);
 
 export default router;
