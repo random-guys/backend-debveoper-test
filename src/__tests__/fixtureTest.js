@@ -93,5 +93,6 @@ describe('FIXTURES TESTS /fixtures/', () => {
 
   afterAll(async () => {
     try { await dropdb(id); } catch (error) { console.log(error); }
+    done();
   });
 });

@@ -263,6 +263,9 @@ describe('FIXTURES TESTS /fixtures/', function () {
             console.log(_context7.t0);
 
           case 8:
+            done();
+
+          case 9:
           case "end":
             return _context7.stop();
         }
