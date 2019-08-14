@@ -8,7 +8,7 @@ class FixtureController {
     try {
       const homeTeam = req.body.homeTeam.toLowerCase();
       const awayTeam = req.body.awayTeam.toLowerCase();
-      const { dateTime, time } = req.body;
+      const { dateTime } = req.body;
       // Determine if the home and away teams exist
       const homeTeamExists = await TeamModel.findTeam(homeTeam);
       const awayTeamExists = await TeamModel.findTeam(awayTeam);
@@ -58,6 +58,9 @@ class FixtureController {
         } else if (/status/i.test(req.path)) {
           whatToEdit = 'status';
           editPayload = req.body.status;
+        } else if (/score/i.test(req.path)) {
+          whatToEdit = 'score';
+          editPayload = req.body.score;
         }
         const editedFixture = await FixtureModel.editFixture(fixtureId, whatToEdit, editPayload);
         response(res, 200, editedFixture);

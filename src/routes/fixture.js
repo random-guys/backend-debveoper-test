@@ -18,5 +18,6 @@ router.route('/:fixtureId')
 
 router.patch('/:fixtureId/dateTime', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 router.patch('/:fixtureId/status', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
+router.patch('/:fixtureId/score', authentication.adminVerifyToken, validations.editFixture, fixtureController.editFixture);
 
 export default router;

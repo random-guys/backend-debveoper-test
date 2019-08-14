@@ -5,12 +5,16 @@
 
 # API endpoint
 - https://sterling-league-test.herokuapp.com/api/v1/
-- Refer to the documentation for a full list of the endpoint
+- Please refer to the documentation link above for a full list of all the endpoints
 
 # Rate Limit
 - The rate limit is setup with redis on heroku
 - Only the public API has throttle limit set. The Admin API has no throttle limit
 - The Authentication Endpoints do not have any rate limits
+- On the public route only 12 API calls are allowed per minute
+
+# Authentication
+After signup/signin a JWT will be passed in the body. When making requests to the protected endpoints, add the token in the Authorization header in the format `Bearer token`
 
 # Software Developer Application Test
 

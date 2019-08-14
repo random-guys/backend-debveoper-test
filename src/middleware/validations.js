@@ -15,7 +15,7 @@ const dateTime = Joi.date().iso().required();
 const status = Joi.string().valid('pending', 'completed').required();
 const min_players = Joi.number().integer().min(1).max(50);
 const max_players = Joi.number().integer().min(1).max(50);
-
+const score = Joi.string().regex(/^\d+-\d+$/).required();
 class Validations {
   static signUpValidation(req, res, next) {
     const schema = {
@@ -133,6 +133,11 @@ class Validations {
     } else if (/status/i.test(req.path)) {
       schema = { id, status };
       validationObject = { id: req.params.fixtureId, status: req.body.status };
+    } else if (/score/i.test(req.path)) {
+      schema = {
+        score,
+      };
+      validationObject = { ...req.body };
     }
     const { error } = Joi.validate(validationObject, schema);
     if (error) {

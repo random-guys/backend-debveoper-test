@@ -5,8 +5,6 @@ import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import response from '../response';
 
-const redisClient = redis.createClient(process.env.REDIS_URL);
-
 
 require('dotenv').config();
 
@@ -22,6 +20,7 @@ class Authentication {
         const token = tokenArray[1];
         const user = await jwt.verify(token, process.env.JWT_SECRET);
         if (process.env.NODE_ENV === 'production') {
+          const redisClient = redis.createClient(process.env.REDIS_URL);
           redisClient.exists(user.id, (err, reply) => {
             if (err) {
               console.log('Redis not working...');

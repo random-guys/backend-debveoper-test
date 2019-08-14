@@ -39,6 +39,8 @@ const min_players = _joi.default.number().integer().min(1).max(50);
 
 const max_players = _joi.default.number().integer().min(1).max(50);
 
+const score = _joi.default.string().regex(/^\d+-\d+$/).required();
+
 class Validations {
   static signUpValidation(req, res, next) {
     const schema = {
@@ -203,6 +205,11 @@ class Validations {
         id: req.params.fixtureId,
         status: req.body.status
       };
+    } else if (/score/i.test(req.path)) {
+      schema = {
+        score
+      };
+      validationObject = _objectSpread({}, req.body);
     }
 
     const {
