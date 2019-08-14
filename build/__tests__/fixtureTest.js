@@ -146,8 +146,13 @@ describe('FIXTURES TESTS /fixtures/', function () {
             id = user.body.data._id;
             console.log("#test: ".concat(user.body.data._id));
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data).toHaveProperty('_id');
+            expect(user.body.data).toHaveProperty('home_team');
+            expect(user.body.data).toHaveProperty('away_team');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 6:
+          case 11:
           case "end":
             return _context3.stop();
         }
@@ -175,8 +180,13 @@ describe('FIXTURES TESTS /fixtures/', function () {
           case 2:
             user = _context4.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data).toHaveProperty('_id');
+            expect(user.body.data).toHaveProperty('home_team');
+            expect(user.body.data).toHaveProperty('away_team');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 9:
           case "end":
             return _context4.stop();
         }
@@ -203,8 +213,14 @@ describe('FIXTURES TESTS /fixtures/', function () {
           case 2:
             user = _context5.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data[0]).toHaveProperty('_id');
+            expect(user.body.data[0]).toHaveProperty('home_team');
+            expect(user.body.data[0]).toHaveProperty('away_team');
+            expect(user.body.data[0]).toHaveProperty('status');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 10:
           case "end":
             return _context5.stop();
         }
@@ -232,8 +248,10 @@ describe('FIXTURES TESTS /fixtures/', function () {
           case 2:
             user = _context6.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 6:
           case "end":
             return _context6.stop();
         }

@@ -43,7 +43,6 @@ class User {
 
   static async signin(req, res) {
     try {
-      console.log(`#1: ${req.path}`);
       // get password from request body
       const { password } = req.body;
       // get email from client
@@ -98,7 +97,6 @@ class User {
 
   static async checkToken(req, res, next) {
     const { token } = req.body;
-    console.log(`#2: ${token}`);
     if (token) {
       try {
         req.active = await jwt.verify(token, process.env.PRIVATE_KEY);

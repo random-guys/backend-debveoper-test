@@ -52,6 +52,10 @@ describe('USER TESTS /auth/', () => {
         password: 'felixer11',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data).toHaveProperty('_id');
+    expect(user.body.data).toHaveProperty('email');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('ERR: returns error when user exists', async () => {
@@ -64,6 +68,9 @@ describe('USER TESTS /auth/', () => {
         password: 'felixer11',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('error');
+    expect(user.body.error).toBe('User exists');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(400);
   });
 
   test('POST: returns logged in user data', async () => {
@@ -74,6 +81,11 @@ describe('USER TESTS /auth/', () => {
         password: 'felixer11',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data).toHaveProperty('_id');
+    expect(user.body.data).toHaveProperty('email');
+    expect(user.body.data).toHaveProperty('token');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('ERR: returns error with missing parameters', async () => {
@@ -83,6 +95,8 @@ describe('USER TESTS /auth/', () => {
         email: 'jeny@yahoo.com',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('error');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(400);
   });
   afterAll(async () => {
     try { await dropdb(); } catch (error) { console.log(error); }

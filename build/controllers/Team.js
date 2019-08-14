@@ -77,54 +77,53 @@ function () {
                 }
 
                 (0, _response.default)(res, 'Unauthorised user', 401);
-                _context.next = 19;
+                _context.next = 18;
                 break;
 
               case 5:
                 team_name = req.body.team_name.toLowerCase();
-                console.log("#1: ".concat(team_name));
-                _context.next = 9;
+                _context.next = 8;
                 return _TeamsDB.default.find(team_name);
 
-              case 9:
+              case 8:
                 member = _context.sent;
 
                 if (member) {
-                  _context.next = 18;
+                  _context.next = 17;
                   break;
                 }
 
                 team_size = req.body.team_size;
-                _context.next = 14;
+                _context.next = 13;
                 return _TeamsDB.default.add({
                   team_name,
                   team_size
                 });
 
-              case 14:
+              case 13:
                 team = _context.sent;
                 (0, _response.default)(res, _objectSpread({}, team), 200);
-                _context.next = 19;
+                _context.next = 18;
                 break;
 
-              case 18:
+              case 17:
                 (0, _response.default)(res, 'team already exists', 400);
 
-              case 19:
-                _context.next = 24;
+              case 18:
+                _context.next = 23;
                 break;
 
-              case 21:
-                _context.prev = 21;
+              case 20:
+                _context.prev = 20;
                 _context.t0 = _context["catch"](0);
                 (0, _response.default)(res, _context.t0, 500);
 
-              case 24:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 21]]);
+        }, _callee, null, [[0, 20]]);
       }));
 
       function add(_x, _x2) {

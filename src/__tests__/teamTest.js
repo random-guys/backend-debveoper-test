@@ -53,8 +53,11 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     name = user.body.data.team_name;
-    console.log(`#test: ${user.body.data.team_name}`);
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data).toHaveProperty('_id');
+    expect(user.body.data).toHaveProperty('team_name');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('ERR: returns error when team exist', async () => {
@@ -66,6 +69,9 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('error');
+    expect(user.body.error).toBe('team already exists');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(400);
   });
 
   test('GET: return single team', async () => {
@@ -75,6 +81,10 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data).toHaveProperty('_id');
+    expect(user.body.data).toHaveProperty('team_name');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('GET: return all teams', async () => {
@@ -84,6 +94,10 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data[1]).toHaveProperty('_id');
+    expect(user.body.data[1]).toHaveProperty('team_name');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('ERR: incomplete data', async () => {
@@ -93,6 +107,8 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('error');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(400);
   });
 
   test('PATCH: updates a teams', async () => {
@@ -103,6 +119,8 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
   test('DELETE: deletes teams', async () => {
     const user = await request(server)
@@ -112,6 +130,8 @@ describe('TEAM TESTS /teams/', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
   afterAll(async () => {
     try { await dropdb(); } catch (error) { console.log(error); }
