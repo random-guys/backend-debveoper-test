@@ -142,10 +142,13 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context3.sent;
             name = user.body.data.team_name;
-            console.log("#test: ".concat(user.body.data.team_name));
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data).toHaveProperty('_id');
+            expect(user.body.data).toHaveProperty('team_name');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 6:
+          case 9:
           case "end":
             return _context3.stop();
         }
@@ -174,8 +177,11 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context4.sent;
             expect(user.body).toHaveProperty('error');
+            expect(user.body.error).toBe('team already exists');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(400);
 
-          case 4:
+          case 7:
           case "end":
             return _context4.stop();
         }
@@ -202,8 +208,12 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context5.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data).toHaveProperty('_id');
+            expect(user.body.data).toHaveProperty('team_name');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 8:
           case "end":
             return _context5.stop();
         }
@@ -230,8 +240,12 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context6.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body.data[1]).toHaveProperty('_id');
+            expect(user.body.data[1]).toHaveProperty('team_name');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 8:
           case "end":
             return _context6.stop();
         }
@@ -258,8 +272,10 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context7.sent;
             expect(user.body).toHaveProperty('error');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(400);
 
-          case 4:
+          case 6:
           case "end":
             return _context7.stop();
         }
@@ -287,8 +303,10 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context8.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 6:
           case "end":
             return _context8.stop();
         }
@@ -316,8 +334,10 @@ describe('TEAM TESTS /teams/', function () {
           case 2:
             user = _context9.sent;
             expect(user.body).toHaveProperty('data');
+            expect(user.body).toHaveProperty('status');
+            expect(user.body.status).toBe(200);
 
-          case 4:
+          case 6:
           case "end":
             return _context9.stop();
         }

@@ -153,33 +153,32 @@ function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
-                console.log("#1: ".concat(req.path)); // get password from request body
-
+                // get password from request body
                 password = req.body.password; // get email from client
 
                 email = req.body.email.replace(/\s/g, '').toLowerCase(); // check if user is in database and
 
-                _context2.next = 6;
+                _context2.next = 5;
                 return _UsersDB.default.find(email);
 
-              case 6:
+              case 5:
                 member = _context2.sent;
 
                 if (member) {
-                  _context2.next = 11;
+                  _context2.next = 10;
                   break;
                 }
 
                 // throw error since email isn't in server
                 (0, _response.default)(res, 'Email does not exist', 401);
-                _context2.next = 15;
+                _context2.next = 14;
                 break;
 
-              case 11:
-                _context2.next = 13;
+              case 10:
+                _context2.next = 12;
                 return _bcrypt.default.compare(password, member.password);
 
-              case 13:
+              case 12:
                 passwordMatch = _context2.sent;
 
                 // if password doesn't match, throw an error
@@ -196,21 +195,21 @@ function () {
                   (0, _response.default)(res, member, 200);
                 }
 
-              case 15:
-                _context2.next = 20;
+              case 14:
+                _context2.next = 19;
                 break;
 
-              case 17:
-                _context2.prev = 17;
+              case 16:
+                _context2.prev = 16;
                 _context2.t0 = _context2["catch"](0);
                 (0, _response.default)(res, _context2.t0, 500);
 
-              case 20:
+              case 19:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 17]]);
+        }, _callee2, null, [[0, 16]]);
       }));
 
       function signin(_x3, _x4) {
@@ -260,41 +259,40 @@ function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 token = req.body.token;
-                console.log("#2: ".concat(token));
 
                 if (!token) {
-                  _context3.next = 15;
+                  _context3.next = 14;
                   break;
                 }
 
-                _context3.prev = 3;
-                _context3.next = 6;
+                _context3.prev = 2;
+                _context3.next = 5;
                 return _jsonwebtoken.default.verify(token, process.env.PRIVATE_KEY);
 
-              case 6:
+              case 5:
                 req.active = _context3.sent;
                 next();
-                _context3.next = 13;
+                _context3.next = 12;
                 break;
 
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](3);
+              case 9:
+                _context3.prev = 9;
+                _context3.t0 = _context3["catch"](2);
                 (0, _response.default)(res, _context3.t0, 500);
 
-              case 13:
-                _context3.next = 16;
+              case 12:
+                _context3.next = 15;
                 break;
 
-              case 15:
+              case 14:
                 (0, _response.default)(res, 'Token is not present', 401);
 
-              case 16:
+              case 15:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[3, 10]]);
+        }, _callee3, null, [[2, 9]]);
       }));
 
       function checkToken(_x5, _x6, _x7) {

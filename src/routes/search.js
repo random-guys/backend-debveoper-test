@@ -1,5 +1,4 @@
 import express from 'express';
-import user from '../controllers/User';
 import team from '../controllers/Team';
 import fixtures from '../controllers/Fixture';
 

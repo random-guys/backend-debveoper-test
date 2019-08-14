@@ -13,6 +13,7 @@ const params = {
   date: joi.date().iso().required(),
   id: joi.string().min(6).max(30).required(),
   status: joi.string().valid('completed', 'pending').required(),
+  scores: joi.string().min(3).max(3).required(),
 
 };
 

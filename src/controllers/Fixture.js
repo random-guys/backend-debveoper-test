@@ -18,7 +18,7 @@ class Fixtures {
       } else {
         const home_team = req.body.home_team.toLowerCase();
         const away_team = req.body.away_team.toLowerCase();
-        const { date, status } = req.body;
+        const { date, status, scores } = req.body;
         const check1 = await TeamsDB.find(home_team);
         const check2 = await TeamsDB.find(away_team);
         if (check1 && check2) {
@@ -27,6 +27,7 @@ class Fixtures {
             away_team,
             date,
             status,
+            scores,
           };
           const newFixture = await FixturesDB.add(fixture);
           response(res, { ...newFixture }, 200);
@@ -76,7 +77,7 @@ class Fixtures {
         } else {
           const home_team = req.body.home_team.toLowerCase();
           const away_team = req.body.away_team.toLowerCase();
-          const { date, status } = req.body;
+          const { date, status, scores } = req.body;
           const check1 = await TeamsDB.find(home_team);
           const check2 = await TeamsDB.find(away_team);
           if (check1 && check2) {
@@ -85,6 +86,7 @@ class Fixtures {
               away_team,
               date,
               status,
+              scores,
             };
             await FixturesDB.change(id, fixture);
             response(res, 'fixture updated successfully', 200);
@@ -108,6 +110,7 @@ class Fixtures {
       away_team: parameters.away_team,
       date: parameters.date,
       status: parameters.status,
+      scores: parameters.scores,
     };
 
     const {
@@ -115,12 +118,14 @@ class Fixtures {
       away_team,
       date,
       status,
+      scores,
     } = req.body;
     const { error } = joi.validate({
       home_team,
       away_team,
       date,
       status,
+      scores,
     }, schema);
     if (!error) next();
     else response(res, error, 400);

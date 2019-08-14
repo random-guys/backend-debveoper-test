@@ -1,4 +1,44 @@
-[![Build Status](https://travis-ci.org/dchima/backend-developer-test.svg?branch=develop)]
+[![Build Status](https://travis-ci.org/dchima/backend-developer-test.svg?branch=develop)](https://travis-ci.org/dchima/backend-developer-test)
+
+
+
+### STERLING PRODUCTS LEAGUE API 
+
+[Heroku app]: https://sterling-league.herokuapp.com/
+
+[POSTMAN DOCUMENTATION]: 
+Follow the link below to see complete documentation:
+
+https://documenter.getpostman.com/view/7988284/SVYwMHMF?version=latest#48374473-4ef0-4865-8181-f1c12cd7846d
+
+### Technology used in project
+
+- Travis CI 
+- EXpress
+- Jest
+- MongoDB 
+- Node
+- Babel
+- Swagger 
+- Postman
+
+### Prerequisites
+
+Node Js and git needs to be installed on your system
+
+### Installation
+
+**clone repo**
+git clone https://github.com/dchima/backend-developer-test.git
+
+**Navigate to file and run**
+cd WayFarer
+npm install
+npm start
+
+**Test the app**
+npm run build-test
+
 
 # Software Developer Application Test
 

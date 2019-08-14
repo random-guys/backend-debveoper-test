@@ -57,6 +57,12 @@ describe('FIXTURES TESTS /fixtures/', () => {
     id = user.body.data._id;
     console.log(`#test: ${user.body.data._id}`);
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data).toHaveProperty('_id');
+    expect(user.body.data).toHaveProperty('home_team');
+    expect(user.body.data).toHaveProperty('away_team');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
+
   });
 
   test('GET get a single fixture', async () => {
@@ -68,6 +74,11 @@ describe('FIXTURES TESTS /fixtures/', () => {
 
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data).toHaveProperty('_id');
+    expect(user.body.data).toHaveProperty('home_team');
+    expect(user.body.data).toHaveProperty('away_team');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('GET get a filtered fixture', async () => {
@@ -78,6 +89,12 @@ describe('FIXTURES TESTS /fixtures/', () => {
 
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body.data[0]).toHaveProperty('_id');
+    expect(user.body.data[0]).toHaveProperty('home_team');
+    expect(user.body.data[0]).toHaveProperty('away_team');
+    expect(user.body.data[0]).toHaveProperty('status');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
   });
 
   test('DELETE remove a single fixture', async () => {
@@ -89,6 +106,9 @@ describe('FIXTURES TESTS /fixtures/', () => {
 
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
+    expect(user.body).toHaveProperty('status');
+    expect(user.body.status).toBe(200);
+
   });
 
   afterAll(async () => {
