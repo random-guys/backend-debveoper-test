@@ -7,7 +7,7 @@ import response from './response';
 
 
 module.exports = (req, res, next) => {
-  client.exists(req.body.token, (err, reply) => {
+  client.exists(req, (err, reply) => {
     if (err) {
       console.log('Redis not working...');
       return response(err, 'Redis not working...', 500);
