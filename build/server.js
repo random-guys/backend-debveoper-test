@@ -11,13 +11,13 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
-var _mongodb = require("mongodb");
-
 var _user = _interopRequireDefault(require("./routes/user"));
 
 var _team = _interopRequireDefault(require("./routes/team"));
 
 var _fixture = _interopRequireDefault(require("./routes/fixture"));
+
+var _search = _interopRequireDefault(require("./routes/search"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,7 +33,7 @@ var app = (0, _express.default)(); // assign ports
 
 var PORT = process.env.PORT || 5000;
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'testing') {
   app.listen(PORT, function () {
     return console.log("App listening on port ".concat(PORT));
   });
@@ -47,7 +47,9 @@ app.use(_bodyParser.default.urlencoded({
 // endpoint routers
 
 app.use('/api/v1/auth', _user.default);
-app.use('/api/v1/teams', _team.default); // export the app
+app.use('/api/v1/teams', _team.default);
+app.use('/api/v1/fixtures', _fixture.default);
+app.use('/api/v1/search', _search.default); // export the app
 
 var _default = app;
 exports.default = _default;

@@ -91,7 +91,7 @@ function () {
                 break;
 
               case 10:
-                admin = true;
+                admin = false;
                 _context.next = 13;
                 return _bcrypt.default.hash(password, 10);
 
@@ -263,7 +263,7 @@ function () {
                 console.log("#2: ".concat(token));
 
                 if (!token) {
-                  _context3.next = 16;
+                  _context3.next = 15;
                   break;
                 }
 
@@ -273,29 +273,28 @@ function () {
 
               case 6:
                 req.active = _context3.sent;
-                console.log(req.active.admin);
                 next();
-                _context3.next = 14;
+                _context3.next = 13;
                 break;
 
-              case 11:
-                _context3.prev = 11;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](3);
                 (0, _response.default)(res, _context3.t0, 500);
 
-              case 14:
-                _context3.next = 17;
+              case 13:
+                _context3.next = 16;
                 break;
 
-              case 16:
+              case 15:
                 (0, _response.default)(res, 'Token is not present', 401);
 
-              case 17:
+              case 16:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[3, 11]]);
+        }, _callee3, null, [[3, 10]]);
       }));
 
       function checkToken(_x5, _x6, _x7) {

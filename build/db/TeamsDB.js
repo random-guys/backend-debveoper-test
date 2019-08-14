@@ -19,7 +19,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var NAME = process.env.NODE_ENV !== 'testing' ? 'teams' : 'testcollection';
+var NAME = process.env.NODE_ENV !== 'testing' ? 'teams' : 'test2';
 
 var TeamsDB =
 /*#__PURE__*/
@@ -85,6 +85,27 @@ function () {
           }).then(function (output) {
             resolve(output);
             console.log('team deleted');
+          }).catch(function (err) {
+            return reject(err);
+          });
+        });
+      });
+    }
+  }, {
+    key: "change",
+    value: function change(team_name, new_name) {
+      var update = {
+        $set: {
+          team_name: new_name
+        }
+      };
+      return new Promise(function (resolve, reject) {
+        _db.default.then(function (data) {
+          data.db('danielchima').collection(NAME).findOneAndUpdate({
+            team_name
+          }, update).then(function (output) {
+            resolve(output);
+            console.log('team updated');
           }).catch(function (err) {
             return reject(err);
           });
