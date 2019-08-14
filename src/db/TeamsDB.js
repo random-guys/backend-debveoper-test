@@ -4,7 +4,7 @@
 /* eslint-disable linebreak-style */
 import client from './db';
 
-const NAME = process.env.NODE_ENV !== 'testing' ? 'teams' : 'testcollection';
+const NAME = process.env.NODE_ENV !== 'testing' ? 'teams' : 'test2';
 
 class TeamsDB {
   static add(document) {

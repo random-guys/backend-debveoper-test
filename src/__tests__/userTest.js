@@ -9,7 +9,7 @@ dotenv.config();
 const opendb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
-      data.db('danielchima').collection('testcollection');
+      data.db('danielchima').collection('test1');
       resolve(data);
     }).catch(err => reject(err));
 });
@@ -26,7 +26,7 @@ const closedb = () => new Promise((resolve, reject) => {
 const dropdb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
-      data.db('danielchima').collection('testcollection').drop()
+      data.db('danielchima').collection('test1').drop()
         .then(result => resolve(result));
     }).catch(err => reject(err));
 });

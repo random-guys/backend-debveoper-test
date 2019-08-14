@@ -5,7 +5,7 @@
 import { ObjectID as ID } from 'mongodb';
 import client from './db';
 
-const NAME = process.env.NODE_ENV !== 'testing' ? 'fixtures' : 'testcollection';
+const NAME = process.env.NODE_ENV !== 'testing' ? 'fixtures' : 'test3';
 
 class FixturesDB {
   static add(document) {

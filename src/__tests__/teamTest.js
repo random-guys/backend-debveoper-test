@@ -9,7 +9,7 @@ dotenv.config();
 const opendb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
-      data.db('danielchima').collection('testcollection');
+      data.db('danielchima').collection('test2');
       resolve(data);
     }).catch(err => reject(err));
 });
@@ -26,7 +26,8 @@ const closedb = () => new Promise((resolve, reject) => {
 const dropdb = () => new Promise((resolve, reject) => {
   client
     .then((data) => {
-      data.db('danielchima').collection('testcollection').drop()
+      data.db('danielchima').collection('test2')
+        .findOneAndDelete({ team_name: 'chelsea' })
         .then(result => resolve(result));
     }).catch(err => reject(err));
 });
@@ -40,16 +41,19 @@ afterAll(async () => {
 });
 
 
-/* TEST CASES FOR USER */
+/* TEST CASES FOR TEAMS */
+let name;
 describe('TEAM TESTS /teams/', () => {
   test('POST adds new team', async () => {
     const user = await request(server)
       .post('/api/v1/teams/')
       .send({
-        team_name: 'Arsenal FC',
+        team_name: 'Arsenal',
         team_size: '14',
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
+    name = user.body.data.team_name;
+    console.log(`#test: ${user.body.data.team_name}`);
     expect(user.body).toHaveProperty('data');
   });
 
@@ -57,41 +61,57 @@ describe('TEAM TESTS /teams/', () => {
     const user = await request(server)
       .post('/api/v1/teams/')
       .send({
-        team_name: 'Arsenal FC',
+        team_name: 'Arsenal',
         team_size: '14',
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('error');
   });
-/*  NOT PASSING
+
   test('GET: return single team', async () => {
     const user = await request(server)
-      .post('/api/v1/teams/')
+      .get(`/api/v1/teams/view/${name}`)
       .send({
-        team_name: 'Arsenal FC',
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
-      console.log(`#3: ${user.body.data}`);
     expect(user.body).toHaveProperty('data');
   });
 
   test('GET: return all teams', async () => {
     const user = await request(server)
-      .post('/api/v1/teams/all')
+      .get('/api/v1/teams/all')
       .send({
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('data');
-  }); */
+  });
 
   test('ERR: incomplete data', async () => {
     const user = await request(server)
-      .post('/api/v1/teams/')
+      .get('/api/v1/teams/view/Ar')
       .send({
-        team_name: 'Ar',
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
       }).catch(err => console.log(err));
     expect(user.body).toHaveProperty('error');
+  });
+
+  test('PATCH: updates a teams', async () => {
+    const user = await request(server)
+      .patch('/api/v1/teams/arsenal')
+      .send({
+        team_name: 'chelsea',
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
+      }).catch(err => console.log(err));
+    expect(user.body).toHaveProperty('data');
+  });
+  test('DELETE: deletes teams', async () => {
+    const user = await request(server)
+      .delete('/api/v1/teams/')
+      .send({
+        team_name: 'chelsea',
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
+      }).catch(err => console.log(err));
+    expect(user.body).toHaveProperty('data');
   });
   afterAll(async () => {
     try { await dropdb(); } catch (error) { console.log(error); }

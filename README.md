@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dchima/backend-developer-test.svg?branch=develop)]
+
 # Software Developer Application Test
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”

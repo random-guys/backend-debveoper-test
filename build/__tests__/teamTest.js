@@ -25,7 +25,7 @@ _dotenv.default.config();
 var opendb = function opendb() {
   return new Promise(function (resolve, reject) {
     _db.default.then(function (data) {
-      data.db('danielchima').collection('testcollection');
+      data.db('danielchima').collection('test2');
       resolve(data);
     }).catch(function (err) {
       return reject(err);
@@ -47,7 +47,9 @@ var closedb = function closedb() {
 var dropdb = function dropdb() {
   return new Promise(function (resolve, reject) {
     _db.default.then(function (data) {
-      data.db('danielchima').collection('testcollection').drop().then(function (result) {
+      data.db('danielchima').collection('test2').findOneAndDelete({
+        team_name: 'chelsea'
+      }).then(function (result) {
         return resolve(result);
       });
     }).catch(function (err) {
@@ -114,8 +116,9 @@ regeneratorRuntime.mark(function _callee2() {
     }
   }, _callee2, null, [[0, 5]]);
 })));
-/* TEST CASES FOR USER */
+/* TEST CASES FOR TEAMS */
 
+var name;
 describe('TEAM TESTS /teams/', function () {
   test('POST adds new team',
   /*#__PURE__*/
@@ -129,7 +132,7 @@ describe('TEAM TESTS /teams/', function () {
           case 0:
             _context3.next = 2;
             return (0, _supertest.default)(_server.default).post('/api/v1/teams/').send({
-              team_name: 'Arsenal FC',
+              team_name: 'Arsenal',
               team_size: '14',
               token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
             }).catch(function (err) {
@@ -138,9 +141,11 @@ describe('TEAM TESTS /teams/', function () {
 
           case 2:
             user = _context3.sent;
+            name = user.body.data.team_name;
+            console.log("#test: ".concat(user.body.data.team_name));
             expect(user.body).toHaveProperty('data');
 
-          case 4:
+          case 6:
           case "end":
             return _context3.stop();
         }
@@ -159,7 +164,7 @@ describe('TEAM TESTS /teams/', function () {
           case 0:
             _context4.next = 2;
             return (0, _supertest.default)(_server.default).post('/api/v1/teams/').send({
-              team_name: 'Arsenal FC',
+              team_name: 'Arsenal',
               team_size: '14',
               token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
             }).catch(function (err) {
@@ -177,28 +182,7 @@ describe('TEAM TESTS /teams/', function () {
       }
     }, _callee4);
   })));
-  /*  NOT PASSING
-    test('GET: return single team', async () => {
-      const user = await request(server)
-        .post('/api/v1/teams/')
-        .send({
-          team_name: 'Arsenal FC',
-          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
-        }).catch(err => console.log(err));
-        console.log(`#3: ${user.body.data}`);
-      expect(user.body).toHaveProperty('data');
-    });
-  
-    test('GET: return all teams', async () => {
-      const user = await request(server)
-        .post('/api/v1/teams/all')
-        .send({
-          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg',
-        }).catch(err => console.log(err));
-      expect(user.body).toHaveProperty('data');
-    }); */
-
-  test('ERR: incomplete data',
+  test('GET: return single team',
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
@@ -209,8 +193,7 @@ describe('TEAM TESTS /teams/', function () {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.next = 2;
-            return (0, _supertest.default)(_server.default).post('/api/v1/teams/').send({
-              team_name: 'Ar',
+            return (0, _supertest.default)(_server.default).get("/api/v1/teams/view/".concat(name)).send({
               token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
             }).catch(function (err) {
               return console.log(err);
@@ -218,7 +201,7 @@ describe('TEAM TESTS /teams/', function () {
 
           case 2:
             user = _context5.sent;
-            expect(user.body).toHaveProperty('error');
+            expect(user.body).toHaveProperty('data');
 
           case 4:
           case "end":
@@ -227,33 +210,147 @@ describe('TEAM TESTS /teams/', function () {
       }
     }, _callee5);
   })));
-  afterAll(
+  test('GET: return all teams',
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee6() {
+    var user;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
-            return dropdb();
+            _context6.next = 2;
+            return (0, _supertest.default)(_server.default).get('/api/v1/teams/all').send({
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
+            }).catch(function (err) {
+              return console.log(err);
+            });
 
-          case 3:
-            _context6.next = 8;
-            break;
+          case 2:
+            user = _context6.sent;
+            expect(user.body).toHaveProperty('data');
 
-          case 5:
-            _context6.prev = 5;
-            _context6.t0 = _context6["catch"](0);
-            console.log(_context6.t0);
-
-          case 8:
+          case 4:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, null, [[0, 5]]);
+    }, _callee6);
+  })));
+  test('ERR: incomplete data',
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee7() {
+    var user;
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return (0, _supertest.default)(_server.default).get('/api/v1/teams/view/Ar').send({
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
+            }).catch(function (err) {
+              return console.log(err);
+            });
+
+          case 2:
+            user = _context7.sent;
+            expect(user.body).toHaveProperty('error');
+
+          case 4:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7);
+  })));
+  test('PATCH: updates a teams',
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee8() {
+    var user;
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.next = 2;
+            return (0, _supertest.default)(_server.default).patch('/api/v1/teams/arsenal').send({
+              team_name: 'chelsea',
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
+            }).catch(function (err) {
+              return console.log(err);
+            });
+
+          case 2:
+            user = _context8.sent;
+            expect(user.body).toHaveProperty('data');
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  })));
+  test('DELETE: deletes teams',
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee9() {
+    var user;
+    return regeneratorRuntime.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return (0, _supertest.default)(_server.default).delete('/api/v1/teams/').send({
+              team_name: 'chelsea',
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNTE5ZWIyYWUzNmUwNmM3OWU3ZmJhMyIsImVtYWlsIjoia2VubnlAeWFob28uY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU2NTYzMDEzMSwiZXhwIjoxNTY5MjMwMTMxfQ.Yh0D3PadXLZFHA8jUvbuTv0GzVS1TN20dc32fcpmCkg'
+            }).catch(function (err) {
+              return console.log(err);
+            });
+
+          case 2:
+            user = _context9.sent;
+            expect(user.body).toHaveProperty('data');
+
+          case 4:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9);
+  })));
+  afterAll(
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee10() {
+    return regeneratorRuntime.wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.prev = 0;
+            _context10.next = 3;
+            return dropdb();
+
+          case 3:
+            _context10.next = 8;
+            break;
+
+          case 5:
+            _context10.prev = 5;
+            _context10.t0 = _context10["catch"](0);
+            console.log(_context10.t0);
+
+          case 8:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, null, [[0, 5]]);
   })));
 });
