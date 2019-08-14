@@ -7,8 +7,6 @@ exports.default = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _User = _interopRequireDefault(require("../controllers/User"));
-
 var _Team = _interopRequireDefault(require("../controllers/Team"));
 
 var _Fixture = _interopRequireDefault(require("../controllers/Fixture"));
