@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dchima/backend-developer-test.svg?branch=develop)]
+[![Build Status](https://travis-ci.org/dchima/backend-developer-test.svg?branch=develop)](https://travis-ci.org/dchima/backend-developer-test)
 
 # Software Developer Application Test
 
