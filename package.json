@@ -7,7 +7,7 @@
     "dev-start": "babel-watch src/server.js",
     "build": "npx babel src --out-dir build",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "test": " NODE_ENV=testing jest build/__tests__/fixtureTest.js --forceExit",
+    "test": " NODE_ENV=testing jest build/__tests__ --forceExit",
     "start": "npm run build && node build/server.js",
     "build-test": "npm run build && npm run test"
   },
