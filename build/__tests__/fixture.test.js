@@ -182,3 +182,40 @@ describe('PATCH /api/v1/admin/fixture/:fixtureId/status', () => {
     }
   });
 });
+describe('PATCH /api/v1/admin/fixture/:fixtureId/score', () => {
+  let fixtureId;
+  describe('When the request body parameters are in the proper format', () => {
+    test('It responds with details of the updated fixture score', async () => {
+      const newFixture = await (0, _supertest.default)(_app.default).post('/api/v1/admin/fixture').set('Authorization', "Bearer ".concat(token)).send({
+        homeTeam: 'manutd',
+        awayTeam: 'liverpool',
+        dateTime: '2019-08-16 13:00'
+      }).catch(err => console.log(err));
+      fixtureId = newFixture.body.data._id;
+      const editedFixture = await (0, _supertest.default)(_app.default).patch("/api/v1/admin/fixture/".concat(fixtureId, "/score")).send({
+        score: '5-2'
+      }).set('Authorization', "Bearer ".concat(token)).catch(err => console.log(err));
+      expect(newFixture.body).toHaveProperty('data');
+      expect(newFixture.body.data).toHaveProperty('_id');
+      expect(newFixture.body.data).toHaveProperty('homeTeam');
+      expect(newFixture.body.data).toHaveProperty('awayTeam');
+      expect(newFixture.body.data).toHaveProperty('dateTime');
+      expect(newFixture.body.data).toHaveProperty('status');
+      expect(newFixture.body.data.status).toBe('pending');
+      expect(editedFixture.body).toHaveProperty('data');
+      expect(editedFixture.body.data).toHaveProperty('homeTeam');
+      expect(editedFixture.body.data).toHaveProperty('awayTeam');
+      expect(editedFixture.body.data).toHaveProperty('status');
+      expect(editedFixture.body.data.score).toBe('5-2');
+    });
+  });
+  afterAll(async () => {
+    try {
+      await fixtures.findOneAndDelete({
+        _id: (0, _mongodb.ObjectID)(fixtureId)
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+});

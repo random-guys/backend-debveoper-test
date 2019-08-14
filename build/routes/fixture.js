@@ -22,5 +22,6 @@ router.route('/').post(_authentication.default.adminVerifyToken, _validations.de
 router.route('/:fixtureId').delete(_authentication.default.adminVerifyToken, _validations.default.removeFixture, _fixture.default.removeFixture).get(_authentication.default.adminVerifyToken, _validations.default.getFixture, _fixture.default.getFixture);
 router.patch('/:fixtureId/dateTime', _authentication.default.adminVerifyToken, _validations.default.editFixture, _fixture.default.editFixture);
 router.patch('/:fixtureId/status', _authentication.default.adminVerifyToken, _validations.default.editFixture, _fixture.default.editFixture);
+router.patch('/:fixtureId/score', _authentication.default.adminVerifyToken, _validations.default.editFixture, _fixture.default.editFixture);
 var _default = router;
 exports.default = _default;
