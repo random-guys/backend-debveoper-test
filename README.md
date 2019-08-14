@@ -7,6 +7,11 @@
 - https://sterling-league-test.herokuapp.com/api/v1/
 - Refer to the documentation for a full list of the endpoint
 
+# Rate Limit
+- The rate limit is setup with redis on heroku
+- Only the public API has throttle limit set. The Admin API has no throttle limit
+- The Authentication Endpoints do not have any rate limits
+
 # Software Developer Application Test
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”
