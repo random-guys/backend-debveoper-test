@@ -6,8 +6,8 @@
 
 [Heroku app]: https://sterling-league.herokuapp.com/
 
-[POSTMAN DOCUMENTATION]:
-FOllow the link below to see complete documentation:
+[POSTMAN DOCUMENTATION]: 
+Follow the link below to see complete documentation:
 
 https://documenter.getpostman.com/view/7988284/SVYwMHMF?version=latest#48374473-4ef0-4865-8181-f1c12cd7846d
 
