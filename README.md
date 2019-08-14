@@ -1,5 +1,40 @@
 [![Build Status](https://travis-ci.org/dchima/backend-developer-test.svg?branch=develop)](https://travis-ci.org/dchima/backend-developer-test)
 
+
+
+### STERLING PRODUCTS LEAGUE API 
+
+[Heroku app]: https://sterling-league.herokuapp.com/
+
+### Technology used in project
+
+- Travis CI 
+- EXpress
+- Jest
+- MongoDB 
+- Node
+- Babel
+- Swagger 
+- Postman
+
+### Prerequisites
+
+Node Js and git needs to be installed on your system
+
+### Installation
+
+**clone repo**
+git clone https://github.com/dchima/backend-developer-test.git
+
+**Navigate to file and run**
+cd WayFarer
+npm install
+npm start
+
+**Test the app**
+npm run build-test
+
+
 # Software Developer Application Test
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”
