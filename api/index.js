@@ -1,34 +1,31 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import config from './config/config';
+import routes from './routes';
 
-const port = process.env.PORT || 5000;
+const { port, mongoDB, isTest } = config;
 
 const app = express();
 app.use(cors());
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
 
 // Normal express config defaults
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(routes);
 
-app.get('/', (req, res) => {
-  res.status(200).json({
-    status: 200,
-    message: 'API is ready',
+/* istanbul ignore next */
+if (!isTest) {
+  app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`Listening on port ${port}`);
   });
-});
+}
 
-// catch 404 and forward to error handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    status: 404,
-    message: 'Route Not Found',
-  });
-});
-
-const server = app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Listening on port ${server.address().port}`);
-});
-
-export default server;
+export default app;
