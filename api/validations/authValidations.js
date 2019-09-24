@@ -69,6 +69,46 @@ class authValidation {
     };
     return next();
   }
+
+  /**
+   * @description Signin Validation
+   * @static
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} validation
+   * @memberof authValidation
+   */
+  static signinValidation(req, res, next) {
+    let {
+      email, password
+    } = req.body;
+    const errors = {};
+
+    email = spaceTrimer(email).toLowerCase();
+    password = spaceTrimer(password);
+
+    if (!validator.isEmail(email)) {
+      errors.email = 'Please put in a valid email';
+    }
+
+    if (!validator.isLength(password, { min: 7 })) {
+      errors.password = 'Password should be at least 7 characters long';
+    }
+
+    if (Object.keys(errors).length !== 0) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Fields are required',
+        data: errors
+      });
+    }
+
+    res.locals.userInputData = {
+      email, password
+    };
+    return next();
+  }
 }
 
 export default authValidation;
