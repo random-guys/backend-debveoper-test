@@ -1,0 +1,37 @@
+{
+  "name": "backend-developer-test",
+  "version": "1.0.0",
+  "description": "Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --require @babel/register server.js",
+    "start": "node --require @babel/register server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/czarjulius/backend-developer-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/czarjulius/backend-developer-test/issues"
+  },
+  "homepage": "https://github.com/czarjulius/backend-developer-test#readme",
+  "dependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "jest": "^24.9.0",
+    "mongoose": "^5.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2",
+    "@babel/runtime": "^7.6.0",
+    "@babel/plugin-transform-runtime": "^7.6.0"
+  }
+}
