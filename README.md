@@ -1,6 +1,6 @@
 # Software Developer Application Test
 
-[![CircleCI](https://circleci.com/gh/cavdy-dev/backend-developer-test.svg?style=svg)](https://circleci.com/gh/cavdy-dev/backend-developer-test) [![Test Coverage](https://api.codeclimate.com/v1/badges/778bfb183a909711484e/test_coverage)](https://codeclimate.com/github/cavdy-dev/backend-developer-test/test_coverage)
+[![CircleCI](https://circleci.com/gh/cavdy-dev/backend-developer-test/tree/develop.svg?style=svg)](https://circleci.com/gh/cavdy-dev/backend-developer-test/tree/develop) [![Test Coverage](https://api.codeclimate.com/v1/badges/778bfb183a909711484e/test_coverage)](https://codeclimate.com/github/cavdy-dev/backend-developer-test/test_coverage)
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”
 
