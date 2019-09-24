@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import router from './server/routes/index';
 
 const app = express();
 
@@ -17,6 +18,8 @@ mongoose.connection.on('error', () => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(router);
+
 
 const containerUri = process.env.DATABASE_URL;
    ( async function(){
