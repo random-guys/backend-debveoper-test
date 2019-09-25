@@ -1,19 +1,7 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
-import app from '../api/index';
-import config from '../api/config/config';
-
-const { mongoDB } = config;
+import app from '../api';
 
 describe('User Signup', () => {
-  beforeAll((done) => {
-    mongoose.connect(mongoDB, () => {
-      mongoose.connection.db.dropDatabase(() => {
-        done();
-      });
-    });
-  });
-
   const signupRoute = '/api/v1/auth/signup';
   it('Successful', async () => {
     const res = await request(app)
@@ -32,7 +20,7 @@ describe('User Signup', () => {
     expect(res.body).toHaveProperty('refreshToken');
     expect(res.body.status).toBe(201);
     expect(res.body.message).toBe('Successfully Signed Up');
-  });
+  }, 50000);
 
   it('when no data', async () => {
     const res = await request(app)
@@ -112,7 +100,7 @@ describe('User Signup', () => {
       .send({
         firstname: 'freddy',
         lastname: 'moon',
-        username: 'freddy2',
+        username: 'freddy273',
         email: 'freddy@test.com',
         password: 'password'
       });

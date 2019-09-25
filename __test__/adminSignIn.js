@@ -1,13 +1,13 @@
 import request from 'supertest';
 import app from '../api';
 
-describe('User Signin', () => {
-  const signinRoute = '/api/v1/auth/signin';
+describe('Admin Signin', () => {
+  const signinRoute = '/api/v1/auth/admin/signin';
   it('Successful', async () => {
     const res = await request(app)
       .post(signinRoute)
       .send({
-        email: 'freddy@test.com',
+        email: 'admin@test.com',
         password: 'password'
       });
     expect(res.statusCode).toEqual(200);
@@ -57,7 +57,7 @@ describe('User Signin', () => {
     const res = await request(app)
       .post(signinRoute)
       .send({
-        email: 'freddy@test.com',
+        email: 'admin@test.com',
         password: 'password22'
       });
     expect(res.statusCode).toEqual(400);
@@ -68,5 +68,19 @@ describe('User Signin', () => {
     expect(res.body.status).toBe(400);
     expect(res.body.message).toBe('Password error');
     expect(res.body.data.password).toBe('Password is incorrect');
+  });
+
+  it('when not admin', async () => {
+    const res = await request(app)
+      .post(signinRoute)
+      .send({
+        email: 'freddy@test.com',
+        password: 'password'
+      });
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toHaveProperty('message');
+    expect(res.body).toHaveProperty('status');
+    expect(res.body.status).toBe(401);
+    expect(res.body.message).toBe('Unauthorized Account');
   });
 });
