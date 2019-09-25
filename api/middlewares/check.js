@@ -17,7 +17,7 @@ class Check {
    */
   static async emailExist(req, res, next) {
     try {
-      const { email } = res.locals.userInputData;
+      const { newData: { email } } = res.locals.userInputData;
       const emailExist = await findUser({ email });
 
       if (emailExist.length !== 0) {
@@ -70,6 +70,36 @@ class Check {
   }
 
   /**
+   * @description Check if admin
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async checkIfAdmin(req, res, next) {
+    try {
+      const { email } = res.locals.userInputData;
+      const emailExist = await findUser({ email });
+
+      if (!emailExist[0].admin) {
+        return res.status(401).json({
+          status: 401,
+          message: 'Unauthorized Account',
+        });
+      }
+
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
    * @description Check if username exist
    * @param {object} req
    * @param {object} res
@@ -79,7 +109,7 @@ class Check {
    */
   static async usernameExist(req, res, next) {
     try {
-      const { username } = res.locals.userInputData;
+      const { newData: { username } } = res.locals.userInputData;
       const usernameExist = await findUser({ username });
 
       if (usernameExist.length !== 0) {

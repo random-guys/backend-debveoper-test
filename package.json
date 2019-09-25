@@ -7,6 +7,7 @@
     "start": "node ./dist/index.js",
     "build": "babel -d ./dist ./api -s",
     "dev": "nodemon --exec babel-node ./api/index.js",
+    "pretest": "npm run build && node ./dist/seeders/index.js",
     "test": "cross-env NODE_ENV=test jest --coverage --colors --forceExit"
   },
   "repository": {
@@ -53,8 +54,10 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-classes": "^7.5.5",
     "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.3.1",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
     "codeclimate-test-reporter": "^0.5.1",
     "cross-env": "^6.0.0",
     "eslint": "^5.13.0",

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../api/index';
+import app from '../api';
 
 describe('Index.js', () => {
   it('home route', async () => {
