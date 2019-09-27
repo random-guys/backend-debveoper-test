@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import findItem from '../helpers/findItem';
 
-const { findUser, findTeam } = findItem;
+const { findUser, findTeam, findFixture } = findItem;
 
 /**
  * @class Check
@@ -198,6 +198,51 @@ class Check {
   }
 
   /**
+   * @description Check if team name don't exist
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async teamNameDontExist(req, res, next) {
+    try {
+      const { home, away } = res.locals.fixture;
+      const homeExist = await findTeam({
+        team_name: home
+      });
+
+      if (homeExist.length === 0 && home !== '') {
+        return res.status(404).json({
+          status: 404,
+          message: 'Team error',
+          data: { home: `${home} dont exist` }
+        });
+      }
+
+      const awayExist = await findTeam({
+        team_name: away
+      });
+
+      if (awayExist.length === 0 && away !== '') {
+        return res.status(404).json({
+          status: 404,
+          message: 'Team error',
+          data: { away: `${away} dont exist` }
+        });
+      }
+
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
    * @description Check if team name exist
    * @param {object} req
    * @param {object} res
@@ -253,6 +298,72 @@ class Check {
       }
 
       res.locals.teamData = shortNameExist;
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
+   * @description Check if fixture valid
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async fixtureValid(req, res, next) {
+    try {
+      const { fixtureId } = req.params;
+      const fixtureExist = await findFixture({
+        _id: fixtureId
+      });
+
+      if (fixtureExist.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Fixture does not exist'
+        });
+      }
+
+      res.locals.fixtureData = fixtureExist;
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
+   * @description Check if fixture generated link valid
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async fixtureGeneratedLinkValid(req, res, next) {
+    try {
+      const { fixtureLink } = req.params;
+      const fixtureExist = await findFixture({
+        fixture_link: fixtureLink
+      });
+
+      if (fixtureExist.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          message: 'Invalid fixture link'
+        });
+      }
+
+      res.locals.fixtureData = fixtureExist;
       return next();
     } catch (error) {
       /* istanbul ignore next */
