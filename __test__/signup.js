@@ -20,7 +20,7 @@ describe('User Signup', () => {
     expect(res.body).toHaveProperty('refreshToken');
     expect(res.body.status).toBe(201);
     expect(res.body.message).toBe('Successfully Signed Up');
-  }, 50000);
+  });
 
   it('when no data', async () => {
     const res = await request(app)
@@ -81,7 +81,7 @@ describe('User Signup', () => {
       .send({
         firstname: 'freddy',
         lastname: 'moon',
-        username: 'freddy',
+        username: 'cavdy',
         email: 'freddy2@test.com',
         password: 'password'
       });
@@ -101,7 +101,7 @@ describe('User Signup', () => {
         firstname: 'freddy',
         lastname: 'moon',
         username: 'freddy273',
-        email: 'freddy@test.com',
+        email: 'cavdy@cavdy.com',
         password: 'password'
       });
     expect(res.statusCode).toEqual(409);

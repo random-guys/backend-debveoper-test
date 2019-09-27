@@ -2,7 +2,6 @@
 import User from '../models/User';
 import hashPassword from '../helpers/hashPassword';
 import config from '../config/config';
-import drop from './drop';
 
 const { password } = config;
 
@@ -20,19 +19,14 @@ const data = [
 ];
 const seedUser = async () => {
   try {
-    const db = await drop('users');
-
     data.map(async (user) => {
       const newUser = await new User(user);
       newUser.save();
     });
     console.log('User successfully seeded');
-    setTimeout(() => {
-      db.disconnect();
-    }, 5000);
   } catch (error) {
     console.log('User seeder failed');
   }
 };
 
-seedUser();
+export default seedUser;

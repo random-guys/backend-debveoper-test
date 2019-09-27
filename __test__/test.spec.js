@@ -3,3 +3,7 @@ import './signup';
 import './signin';
 import './adminSignup';
 import './adminSignIn';
+import './createTeam';
+import './editTeam';
+import './viewTeam';
+import './deleteTeam';

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import findItem from '../helpers/findItem';
 
-const { findUser } = findItem;
+const { findUser, findTeam } = findItem;
 
 /**
  * @class Check
@@ -154,6 +154,105 @@ class Check {
       }
 
       res.locals.user = user;
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
+   * @description Check if team name exist
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async teamNameExist(req, res, next) {
+    try {
+      const { teamName } = res.locals.team;
+      const teamExist = await findTeam({
+        team_name: teamName
+      });
+
+      if (teamExist.length !== 0) {
+        return res.status(409).json({
+          status: 409,
+          message: 'Team error',
+          data: { teamName: 'Team Name already exist' }
+        });
+      }
+
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
+   * @description Check if team name exist
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async teamShortNameExist(req, res, next) {
+    try {
+      const { shortName } = res.locals.team;
+      const shortNameExist = await findTeam({
+        short_name: shortName
+      });
+
+      if (shortNameExist.length !== 0) {
+        return res.status(409).json({
+          status: 409,
+          message: 'Team error',
+          data: { shortName: 'Short Name already exist' }
+        });
+      }
+
+      return next();
+    } catch (error) {
+      /* istanbul ignore next */
+      return res.status(500).json({
+        status: 500,
+        message: error.message
+      });
+    }
+  }
+
+  /**
+   * @description Check if team valid
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   * @returns {object} respone
+   * @memberof Check
+   */
+  static async teamValid(req, res, next) {
+    try {
+      const { shortName } = req.params;
+      const shortNameExist = await findTeam({
+        short_name: shortName
+      });
+
+      if (shortNameExist.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Team does not exist'
+        });
+      }
+
+      res.locals.teamData = shortNameExist;
       return next();
     } catch (error) {
       /* istanbul ignore next */
