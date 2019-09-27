@@ -5,10 +5,14 @@ import mongoose from 'mongoose';
 import config from './config/config';
 import routes from './routes';
 
-const { port, mongoDB, isTest } = config;
+
+const {
+  port, mongoDB, isTest
+} = config;
 
 const app = express();
 app.use(cors());
+
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

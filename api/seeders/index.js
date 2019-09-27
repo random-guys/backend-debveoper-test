@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import config from '../config/config';
 import userSeed from './users.seeder';
 import teamSeed from './teams.seeder';
+import fixtureSeed from './fixture.seeder';
 
 const { mongoDB } = config;
 
@@ -19,6 +20,7 @@ const runSeeders = async () => {
 
   await userSeed();
   await teamSeed();
+  await fixtureSeed();
 
   setTimeout(() => {
     db.disconnect();
