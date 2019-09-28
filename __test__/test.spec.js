@@ -1,0 +1,14 @@
+import './index';
+import './signup';
+import './signin';
+import './adminSignup';
+import './adminSignIn';
+import './createTeam';
+import './editTeam';
+import './viewTeam';
+import './deleteTeam';
+import './createFixtures';
+import './editFixtures';
+import './viewFixtures';
+import './removeFixtures';
+import './search';
