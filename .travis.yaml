@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+  - 10.16.3
+
+sudo:
+  required
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install
+
+services:
+  - mongodb
+  - redis-server
+
+script:
+  - npm test
+
+after_success:
+  - npm run coverage
+  
