@@ -1,3 +1,12 @@
+## How to start the server
+
+```bash
+# Run this line if it's the first time you try to build
+npm i
+
+npm run start:dev
+```
+
 # Software Developer Application Test
 
 Create a API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”

@@ -1,0 +1,56 @@
+{
+  "name": "backend-developer-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src/ --fix",
+    "build": "babel src -d dist --copy-files",
+    "clean": "rm -rf build",
+    "start": "node dist/index.js",
+    "start:dev": "nodemon --exec babel-node src/index.js",
+    "test": "export NODE_ENV=test || set NODE_ENV=test&& nyc --require @babel/register jest --config jest.config.json src/test/**.test.js --forceExit --detectOpenHandles --maxWorkers=10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Simpcyclassy/backend-developer-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Simpcyclassy/backend-developer-test/issues"
+  },
+  "homepage": "https://github.com/Simpcyclassy/backend-developer-test#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.4.5",
+    "@hapi/joi": "^15.1.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongodb": "^3.2.7",
+    "mongoose": "^5.6.3",
+    "morgan": "^1.9.1",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.4.5",
+    "codecov": "^3.5.0",
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "jest": "^24.8.0",
+    "mongodb-memory-server": "^5.1.5",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1",
+    "supertest": "^4.0.2"
+  }
+}
