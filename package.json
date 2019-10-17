@@ -10,7 +10,11 @@
     "start": "node dist/index.js",
     "start:dev": "nodemon --exec babel-node index.js",
     "pretest": "set NODE_ENV=test || NODE_ENV=test",
-    "test": "nyc --require @babel/register jest --config jest.config.json src/test/ --forceExit --detectOpenHandles --maxWorkers=10"
+    "test": "nyc --require @babel/register jest --config jest.config.json src/test/ --forceExit --detectOpenHandles --maxWorkers=10",
+    "docker:on": "docker-compose up -d",
+    "docker:off": "docker-compose down",
+    "docker:rebuild": "docker-compose up --rebuild",
+    "docker:destroy": "docker-compose down -v"
   },
   "repository": {
     "type": "git",
