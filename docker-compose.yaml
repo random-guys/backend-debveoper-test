@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  webapp:
+    container_name: premier-league
+    restart: always
+    build: .
+    ports:
+      - "8080:3000"
+    links:
+      - mongodb
+      - redis
+
+  mongo:
+    container_name: mongo
+    restart: always
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - pg_volume:/var/lib/data
+
+  redis:
+    container_name: redis
+    restart: always
+    image: redis:5.0
+    ports:
+      - "6379:6379"
+
+volumes:
+  pg_volume:
