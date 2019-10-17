@@ -1,3 +1,5 @@
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/simpcyclassy/backend-developer-test) ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/simpcyclassy/backend-developer-test)
+
 ## How to start the server
 
 ```bash
@@ -6,6 +8,11 @@ npm i
 
 npm run start:dev
 ```
+## Link to docker build
+
+```
+https://hub.docker.com/r/simpcyclassy/backend-developer-test
+``` 
 
 # Software Developer Application Test
 
