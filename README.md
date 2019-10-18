@@ -8,6 +8,12 @@ npm i
 
 npm run start:dev
 ```
+## Link to documentation
+
+```
+https://backenddevelopertest.docs.apiary.io/
+```
+
 ## Link to docker build
 
 ```
